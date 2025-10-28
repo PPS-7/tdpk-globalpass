@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import MemberDashboard from "./pages/MemberDashboard";
 import PartnerDashboard from "./pages/PartnerDashboard";
+import CoworkingSpaces from "./pages/CoworkingSpaces";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -22,6 +23,7 @@ const App = () => (
           <Route path="/auth" element={<Auth />} />
           <Route path="/member" element={<MemberDashboard />} />
           <Route path="/partner" element={<PartnerDashboard />} />
+          <Route path="/spaces" element={<CoworkingSpaces />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
