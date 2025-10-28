@@ -71,21 +71,23 @@ const Index = () => {
       {/* Features Grid */}
       <section className="container mx-auto px-4 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <Card className="border-primary/10 hover:shadow-xl transition-all">
-            <CardContent className="pt-6">
-              <div className="flex items-start gap-4">
-                <div className="p-3 bg-secondary/10 rounded-lg">
-                  <Globe className="h-6 w-6 text-secondary" />
+          <Link to="/partners">
+            <Card className="border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30">
+              <CardContent className="pt-6">
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-secondary/10 rounded-lg">
+                    <Globe className="h-6 w-6 text-secondary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold mb-2">Global Access</h3>
+                    <p className="text-sm text-muted-foreground">
+                      Access partner spaces across Thailand, Japan, Taiwan, and beyond
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-semibold mb-2">Global Access</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Access partner spaces across Thailand, Japan, Taiwan, and beyond
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </Link>
 
           <Link to="/spaces">
             <Card className="border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30">
