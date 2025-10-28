@@ -40,7 +40,7 @@ const DigitalPass = () => {
   ];
 
   const passComponents = [
-    { label: "Member Name", value: "Pakkanan Chansawang", icon: null },
+    { label: "Member Name", value: "Pakkanan C.", icon: null },
     { label: "Member ID", value: "TDPK-2025-001234", icon: null },
     { label: "Tier", value: "Premium Member", badge: true, color: "primary" },
     { label: "Status", value: "Active", badge: true, color: "success" },

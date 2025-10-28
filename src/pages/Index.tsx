@@ -53,9 +53,6 @@ const Index = () => {
           <Button asChild size="lg" variant="hero" className="min-w-[200px]">
             <Link to="/auth">Get Started</Link>
           </Button>
-          <Button asChild size="lg" variant="premium" className="min-w-[200px]">
-            <Link to="/spaces">Explore Spaces</Link>
-          </Button>
           <Button 
             onClick={handleSeedDemoData} 
             disabled={seeding}
