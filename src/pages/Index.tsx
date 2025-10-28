@@ -107,69 +107,77 @@ const Index = () => {
             </Card>
           </Link>
 
-          <Card className="border-primary/10 hover:shadow-xl transition-all">
-            <CardContent className="pt-6">
-              <div className="flex items-start gap-4">
-                <div className="p-3 bg-secondary/10 rounded-lg">
-                  <Gift className="h-6 w-6 text-secondary" />
+          <Link to="/perks">
+            <Card className="border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30">
+              <CardContent className="pt-6">
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-secondary/10 rounded-lg">
+                    <Gift className="h-6 w-6 text-secondary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold mb-2">Exclusive Perks</h3>
+                    <p className="text-sm text-muted-foreground">
+                      Unlock special offers and discounts at partner locations
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-semibold mb-2">Exclusive Perks</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Unlock special offers and discounts at partner locations
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </Link>
 
-          <Card className="border-primary/10 hover:shadow-xl transition-all">
-            <CardContent className="pt-6">
-              <div className="flex items-start gap-4">
-                <div className="p-3 bg-primary/10 rounded-lg">
-                  <Zap className="h-6 w-6 text-primary" />
+          <Link to="/verification">
+            <Card className="border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30">
+              <CardContent className="pt-6">
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-primary/10 rounded-lg">
+                    <Zap className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold mb-2">Instant Verification</h3>
+                    <p className="text-sm text-muted-foreground">
+                      Quick QR code scanning for seamless check-ins
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-semibold mb-2">Instant Verification</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Quick QR code scanning for seamless check-ins
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </Link>
 
-          <Card className="border-primary/10 hover:shadow-xl transition-all">
-            <CardContent className="pt-6">
-              <div className="flex items-start gap-4">
-                <div className="p-3 bg-secondary/10 rounded-lg">
-                  <Shield className="h-6 w-6 text-secondary" />
+          <Link to="/tenant-privilege">
+            <Card className="border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30">
+              <CardContent className="pt-6">
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-secondary/10 rounded-lg">
+                    <Shield className="h-6 w-6 text-secondary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold mb-2">Tenant Privilege</h3>
+                    <p className="text-sm text-muted-foreground">
+                      Special benefits for office tenants in the network
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-semibold mb-2">Tenant Privilege</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Special benefits for office tenants in the network
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </Link>
 
-          <Card className="border-primary/10 hover:shadow-xl transition-all">
-            <CardContent className="pt-6">
-              <div className="flex items-start gap-4">
-                <div className="p-3 bg-primary/10 rounded-lg">
-                  <Sparkles className="h-6 w-6 text-primary" />
+          <Link to="/digital-pass">
+            <Card className="border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30">
+              <CardContent className="pt-6">
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-primary/10 rounded-lg">
+                    <Sparkles className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold mb-2">Digital Pass</h3>
+                    <p className="text-sm text-muted-foreground">
+                      Your membership in your pocket, always accessible
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-semibold mb-2">Digital Pass</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Your membership in your pocket, always accessible
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </Link>
         </div>
       </section>
 

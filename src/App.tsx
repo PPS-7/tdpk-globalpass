@@ -9,6 +9,10 @@ import MemberDashboard from "./pages/MemberDashboard";
 import PartnerDashboard from "./pages/PartnerDashboard";
 import CoworkingSpaces from "./pages/CoworkingSpaces";
 import PartnerList from "./pages/PartnerList";
+import ExclusivePerks from "./pages/ExclusivePerks";
+import InstantVerification from "./pages/InstantVerification";
+import TenantPrivilege from "./pages/TenantPrivilege";
+import DigitalPass from "./pages/DigitalPass";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +30,10 @@ const App = () => (
           <Route path="/partner" element={<PartnerDashboard />} />
           <Route path="/spaces" element={<CoworkingSpaces />} />
           <Route path="/partners" element={<PartnerList />} />
+          <Route path="/perks" element={<ExclusivePerks />} />
+          <Route path="/verification" element={<InstantVerification />} />
+          <Route path="/tenant-privilege" element={<TenantPrivilege />} />
+          <Route path="/digital-pass" element={<DigitalPass />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
