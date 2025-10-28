@@ -546,7 +546,6 @@ export type Database = {
           id: string
           last_login_at: string | null
           partner_id: string | null
-          role: Database["public"]["Enums"]["user_role"]
           two_factor_secret: string | null
           updated_at: string
         }
@@ -556,7 +555,6 @@ export type Database = {
           id?: string
           last_login_at?: string | null
           partner_id?: string | null
-          role?: Database["public"]["Enums"]["user_role"]
           two_factor_secret?: string | null
           updated_at?: string
         }
@@ -566,7 +564,6 @@ export type Database = {
           id?: string
           last_login_at?: string | null
           partner_id?: string | null
-          role?: Database["public"]["Enums"]["user_role"]
           two_factor_secret?: string | null
           updated_at?: string
         }

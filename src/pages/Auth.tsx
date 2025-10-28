@@ -8,6 +8,36 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, Sparkles } from "lucide-react";
+import { z } from "zod";
+
+// Validation schemas for security
+const signInSchema = z.object({
+  email: z.string().trim().email("Invalid email format").max(255, "Email too long"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
+});
+
+const signUpSchema = z.object({
+  email: z.string().trim().email("Invalid email format").max(255, "Email too long"),
+  password: z
+    .string()
+    .min(12, "Password must be at least 12 characters")
+    .regex(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])/,
+      "Password must contain uppercase, lowercase, number, and special character"
+    ),
+  firstName: z
+    .string()
+    .trim()
+    .min(1, "First name required")
+    .max(50, "First name too long")
+    .regex(/^[a-zA-Z\s'-]+$/, "Invalid characters in name"),
+  lastName: z
+    .string()
+    .trim()
+    .min(1, "Last name required")
+    .max(50, "Last name too long")
+    .regex(/^[a-zA-Z\s'-]+$/, "Invalid characters in name"),
+});
 
 const Auth = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -29,18 +59,31 @@ const Auth = () => {
   }, []);
 
   const checkUserRoleAndRedirect = async (userId: string) => {
-    const { data: userData } = await supabase
-      .from("users")
-      .select("role")
-      .eq("id", userId)
-      .single();
+    // Query user_roles table for secure role checking
+    const { data: userRoles, error: roleError } = await supabase
+      .from('user_roles')
+      .select('role')
+      .eq('user_id', userId);
 
-    if (userData?.role === "admin") {
-      navigate("/admin");
-    } else if (userData?.role === "partner_user") {
-      navigate("/partner");
+    if (roleError) {
+      console.error('Error fetching user roles:', roleError);
+      toast({
+        title: "Error",
+        description: "Failed to fetch user information",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Check roles and redirect accordingly
+    const roles = userRoles?.map(r => r.role) || [];
+    
+    if (roles.includes('admin')) {
+      navigate('/admin');
+    } else if (roles.includes('partner_user')) {
+      navigate('/partner');
     } else {
-      navigate("/member");
+      navigate('/member');
     }
   };
 
@@ -49,14 +92,22 @@ const Auth = () => {
     setIsLoading(true);
 
     try {
-      const { data: authData, error: authError } = await supabase.auth.signUp({
-        email,
+      // Validate inputs with zod
+      const validated = signUpSchema.parse({
+        email: email.trim(),
         password,
+        firstName: firstName.trim(),
+        lastName: lastName.trim(),
+      });
+
+      const { data: authData, error: authError } = await supabase.auth.signUp({
+        email: validated.email,
+        password: validated.password,
         options: {
           emailRedirectTo: `${window.location.origin}/member`,
           data: {
-            first_name: firstName,
-            last_name: lastName,
+            first_name: validated.firstName,
+            last_name: validated.lastName,
           },
         },
       });
@@ -64,20 +115,27 @@ const Auth = () => {
       if (authError) throw authError;
 
       if (authData.user) {
-        // Create user record
+        // Create user record (no role column anymore)
         const { error: userError } = await supabase.from("users").insert({
           id: authData.user.id,
           email: authData.user.email!,
-          role: "member",
         });
 
         if (userError) throw userError;
 
+        // Create user role in secure user_roles table
+        const { error: roleError } = await supabase.from('user_roles').insert({
+          user_id: authData.user.id,
+          role: 'member', // Default role is member
+        });
+
+        if (roleError) throw roleError;
+
         // Create member record
         const { error: memberError } = await supabase.from("members").insert({
           id: authData.user.id,
-          first_name: firstName,
-          last_name: lastName,
+          first_name: validated.firstName,
+          last_name: validated.lastName,
           status: "trial",
           tier: "Member",
         });
@@ -92,11 +150,19 @@ const Auth = () => {
         navigate("/member");
       }
     } catch (error: any) {
-      toast({
-        title: "Sign up failed",
-        description: error.message,
-        variant: "destructive",
-      });
+      if (error instanceof z.ZodError) {
+        toast({
+          title: "Validation Error",
+          description: error.errors[0].message,
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Sign up failed",
+          description: error.message,
+          variant: "destructive",
+        });
+      }
     } finally {
       setIsLoading(false);
     }
@@ -107,9 +173,15 @@ const Auth = () => {
     setIsLoading(true);
 
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
+      // Validate inputs with zod
+      const validated = signInSchema.parse({
+        email: email.trim(),
         password,
+      });
+
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: validated.email,
+        password: validated.password,
       });
 
       if (error) throw error;
@@ -118,11 +190,19 @@ const Auth = () => {
         await checkUserRoleAndRedirect(data.user.id);
       }
     } catch (error: any) {
-      toast({
-        title: "Sign in failed",
-        description: error.message,
-        variant: "destructive",
-      });
+      if (error instanceof z.ZodError) {
+        toast({
+          title: "Validation Error",
+          description: error.errors[0].message,
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Sign in failed",
+          description: error.message,
+          variant: "destructive",
+        });
+      }
     } finally {
       setIsLoading(false);
     }
@@ -217,7 +297,7 @@ const Auth = () => {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="signup-password">Password</Label>
+                  <Label htmlFor="signup-password">Password (min 12 chars with uppercase, lowercase, number, special char)</Label>
                   <Input
                     id="signup-password"
                     type="password"
@@ -225,7 +305,7 @@ const Auth = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                    minLength={6}
+                    minLength={12}
                   />
                 </div>
                 <Button type="submit" className="w-full" variant="hero" disabled={isLoading}>
