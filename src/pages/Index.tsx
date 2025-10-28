@@ -87,21 +87,23 @@ const Index = () => {
             </CardContent>
           </Card>
 
-          <Card className="border-primary/10 hover:shadow-xl transition-all">
-            <CardContent className="pt-6">
-              <div className="flex items-start gap-4">
-                <div className="p-3 bg-primary/10 rounded-lg">
-                  <MapPin className="h-6 w-6 text-primary" />
+          <Link to="/spaces">
+            <Card className="border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30">
+              <CardContent className="pt-6">
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-primary/10 rounded-lg">
+                    <MapPin className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold mb-2">Smart Directory</h3>
+                    <p className="text-sm text-muted-foreground">
+                      Find and navigate to nearby coworking spaces with ease
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-semibold mb-2">Smart Directory</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Find and navigate to nearby coworking spaces with ease
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </Link>
 
           <Card className="border-primary/10 hover:shadow-xl transition-all">
             <CardContent className="pt-6">
