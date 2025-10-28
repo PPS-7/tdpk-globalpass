@@ -7,8 +7,9 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, Sparkles, ArrowLeft } from "lucide-react";
+import { Loader2, ArrowLeft } from "lucide-react";
 import { z } from "zod";
+import tdpkLogo from "@/assets/tdpk-logo.png";
 
 // Validation schemas for security
 const signInSchema = z.object({
@@ -221,11 +222,8 @@ const Auth = () => {
       <div className="flex items-center justify-center">
         <Card className="w-full max-w-md shadow-2xl border-primary/10">
         <CardHeader className="space-y-2 text-center">
-          <div className="flex items-center justify-center gap-2 mb-2">
-            <Sparkles className="h-8 w-8 text-secondary" />
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent">
-              TDPK
-            </h1>
+          <div className="flex items-center justify-center mb-4">
+            <img src={tdpkLogo} alt="True Digital Park" className="h-12" />
           </div>
           <CardTitle className="text-2xl">Member Pass Network</CardTitle>
           <CardDescription>

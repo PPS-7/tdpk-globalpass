@@ -5,6 +5,7 @@ import { Sparkles, MapPin, Gift, Shield, Zap, Globe } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import tdpkLogo from "@/assets/tdpk-logo.png";
 
 const Index = () => {
   const [seeding, setSeeding] = useState(false);
@@ -36,11 +37,8 @@ const Index = () => {
     <div className="min-h-screen bg-gradient-to-br from-background via-muted/30 to-background">
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-20 text-center">
-        <div className="flex items-center justify-center gap-3 mb-6">
-          <Sparkles className="h-12 w-12 text-secondary animate-pulse" />
-          <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-primary via-primary-glow to-secondary bg-clip-text text-transparent">
-            TDPK
-          </h1>
+        <div className="flex items-center justify-center mb-6">
+          <img src={tdpkLogo} alt="True Digital Park" className="h-20 md:h-28" />
         </div>
         <p className="text-xl md:text-2xl text-muted-foreground mb-4">
           Your Global Coworking Network Pass

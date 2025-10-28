@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
-import { QrCode, MapPin, Gift, CreditCard, User, LogOut, Sparkles } from "lucide-react";
+import { QrCode, MapPin, Gift, CreditCard, User, LogOut } from "lucide-react";
+import tdpkLogo from "@/assets/tdpk-logo.png";
 
 interface MemberData {
   id: string;
@@ -85,11 +86,8 @@ const MemberDashboard = () => {
       {/* Header */}
       <header className="bg-card/50 backdrop-blur-sm border-b border-border sticky top-0 z-10">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Sparkles className="h-6 w-6 text-secondary" />
-            <h1 className="text-xl font-bold bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent">
-              TDPK
-            </h1>
+          <div className="flex items-center">
+            <img src={tdpkLogo} alt="True Digital Park" className="h-8" />
           </div>
           <Button variant="ghost" size="icon" onClick={handleSignOut}>
             <LogOut className="h-5 w-5" />

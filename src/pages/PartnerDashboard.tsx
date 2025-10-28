@@ -4,7 +4,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { Scan, Search, BarChart3, Gift, LogOut, Building2 } from "lucide-react";
+import { Scan, Search, BarChart3, Gift, LogOut } from "lucide-react";
+import tdpkLogo from "@/assets/tdpk-logo.png";
 
 const PartnerDashboard = () => {
   const [loading, setLoading] = useState(true);
@@ -56,10 +57,9 @@ const PartnerDashboard = () => {
       {/* Header */}
       <header className="bg-card/50 backdrop-blur-sm border-b border-border sticky top-0 z-10">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Building2 className="h-6 w-6 text-primary" />
+          <div className="flex items-center gap-3">
+            <img src={tdpkLogo} alt="True Digital Park" className="h-8" />
             <div>
-              <h1 className="text-xl font-bold">TDPK Partner Portal</h1>
               <p className="text-sm text-muted-foreground">{partnerName}</p>
             </div>
           </div>
