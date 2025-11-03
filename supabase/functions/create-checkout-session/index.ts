@@ -69,7 +69,7 @@ Deno.serve(async (req) => {
     } else {
       // Create new customer
       const customer = await stripe.customers.create({
-        email: user?.user.email,
+        email: user?.user?.email || undefined,
         name: member ? `${member.first_name} ${member.last_name}` : undefined,
         metadata: { member_id: memberId },
       });

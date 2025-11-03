@@ -75,7 +75,14 @@ const Billing = () => {
       return;
     }
 
-    setPlans(data || []);
+    if (data) {
+      setPlans(data.map(plan => ({
+        ...plan,
+        features_json: typeof plan.features_json === 'string' 
+          ? JSON.parse(plan.features_json)
+          : plan.features_json
+      })) as Plan[]);
+    }
   };
 
   const handleCheckout = async (planId: string) => {

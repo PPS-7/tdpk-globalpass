@@ -1,19 +1,22 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { useToast } from "@/hooks/use-toast";
-import { QrCode, MapPin, Gift, CreditCard, User, LogOut } from "lucide-react";
+import { Loader2, CreditCard, MapPin, Gift, Users, LogOut, Lock, QrCode } from "lucide-react";
 import tdpkLogo from "@/assets/tdpk-logo.png";
 
 interface MemberData {
   id: string;
-  first_name: string;
-  last_name: string;
+  name: string;
   status: string;
   tier: string;
+}
+
+interface Subscription {
+  status: string;
+  current_period_end: string;
 }
 
 const MemberDashboard = () => {
@@ -21,7 +24,6 @@ const MemberDashboard = () => {
   const [subscription, setSubscription] = useState<Subscription | null>(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  const { toast } = useToast();
 
   useEffect(() => {
     checkAuth();
@@ -35,24 +37,38 @@ const MemberDashboard = () => {
       return;
     }
 
-    // Fetch member data
-    const { data: memberData, error } = await supabase
+    const { data: memberData, error: memberError } = await supabase
       .from("members")
-      .select("*")
+      .select("id, first_name, last_name, status, tier")
       .eq("id", session.user.id)
       .single();
 
-    if (error) {
-      toast({
-        title: "Error loading profile",
-        description: error.message,
-        variant: "destructive",
-      });
-      setLoading(false);
+    if (memberError) {
+      console.error("Error fetching member:", memberError);
+      navigate("/auth");
       return;
     }
 
-    setMember(memberData);
+    if (memberData) {
+      setMember({
+        id: memberData.id,
+        name: `${memberData.first_name} ${memberData.last_name}`,
+        status: memberData.status,
+        tier: memberData.tier,
+      });
+    }
+
+    // Check subscription status
+    const { data: subData } = await supabase
+      .from("subscriptions")
+      .select("status, current_period_end")
+      .eq("member_id", session.user.id)
+      .maybeSingle();
+
+    if (subData) {
+      setSubscription(subData);
+    }
+
     setLoading(false);
   };
 
@@ -64,21 +80,25 @@ const MemberDashboard = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-muted/30 to-background">
-        <div className="animate-pulse text-muted-foreground">Loading...</div>
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
       </div>
     );
+  }
+
+  if (!member) {
+    return null;
   }
 
   const getStatusColor = (status: string) => {
     switch (status) {
       case "active":
-        return "bg-green-500";
+        return "bg-secondary";
       case "trial":
-        return "bg-blue-500";
+        return "bg-primary/70";
       case "expired":
-        return "bg-red-500";
+        return "bg-destructive";
       default:
-        return "bg-gray-500";
+        return "bg-muted";
     }
   };
 
@@ -96,114 +116,169 @@ const MemberDashboard = () => {
         </div>
       </header>
 
-      <div className="container mx-auto px-4 py-8 max-w-6xl">
-        {/* Welcome Section */}
-        <div className="mb-8">
-          <h2 className="text-3xl font-bold mb-2">
-            Welcome back, {member?.first_name}!
-          </h2>
-          <p className="text-muted-foreground">
-            Your membership status and quick actions
-          </p>
-        </div>
-
-        {/* Status Card */}
-        <Card className="mb-8 bg-gradient-to-br from-card to-card/50 shadow-xl border-primary/10">
+      {/* Main Content */}
+      <main className="container mx-auto px-4 py-8">
+        <Card className="mb-8 border-primary/20 bg-gradient-to-br from-primary/5 to-secondary/5">
           <CardHeader>
             <div className="flex items-center justify-between">
               <div>
-                <CardTitle className="text-2xl">Member Status</CardTitle>
-                <CardDescription className="mt-2">
-                  {member?.first_name} {member?.last_name}
-                </CardDescription>
-              </div>
-              <div className="text-right space-y-2">
-                <Badge className={`${getStatusColor(member?.status || "")} text-white`}>
-                  {member?.status?.toUpperCase()}
-                </Badge>
-                <div className="text-sm font-medium text-muted-foreground">
-                  Tier: <span className="text-secondary font-bold">{member?.tier}</span>
+                <CardTitle className="text-2xl mb-2">{member.name}</CardTitle>
+                <div className="flex items-center gap-3">
+                  <Badge className={getStatusColor(member.status)}>
+                    {member.status}
+                  </Badge>
+                  <Badge variant="outline">{member.tier} Tier</Badge>
                 </div>
+                {subscription && subscription.status === "active" && (
+                  <p className="text-sm text-muted-foreground mt-2">
+                    Active until {new Date(subscription.current_period_end).toLocaleDateString()}
+                  </p>
+                )}
               </div>
             </div>
           </CardHeader>
-          <CardContent>
-            <p className="text-sm text-muted-foreground">
-              {member?.status === "trial" 
-                ? "You're on a trial membership. Subscribe to unlock all benefits!"
-                : "Your membership is active. Enjoy exclusive perks across our partner network."}
-            </p>
-          </CardContent>
         </Card>
 
+        {/* Subscription Check */}
+        {!subscription || subscription.status !== "active" ? (
+          <Card className="mb-8 border-destructive/50 bg-destructive/5">
+            <CardContent className="pt-6">
+              <div className="flex items-center gap-4">
+                <Lock className="h-12 w-12 text-destructive" />
+                <div className="flex-1">
+                  <h3 className="font-semibold text-lg mb-2">Subscription Required</h3>
+                  <p className="text-muted-foreground mb-4">
+                    Subscribe to unlock your QR pass, exclusive perks, and access to partner spaces worldwide.
+                  </p>
+                  <Button asChild variant="premium">
+                    <Link to="/billing">View Plans & Subscribe</Link>
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        ) : null}
+
         {/* Quick Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer border-primary/10">
-            <CardHeader>
-              <QrCode className="h-8 w-8 text-secondary mb-2" />
-              <CardTitle className="text-lg">My Pass</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">
-                View your digital membership pass and QR code
-              </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <Card
+            className={`border-primary/10 transition-all ${
+              subscription?.status === "active"
+                ? "hover:shadow-xl cursor-pointer hover:border-primary/30"
+                : "opacity-60"
+            }`}
+          >
+            <CardContent className="pt-6">
+              <div className="flex flex-col items-center text-center gap-3">
+                <div className="p-3 bg-primary/10 rounded-full relative">
+                  <QrCode className="h-8 w-8 text-primary" />
+                  {subscription?.status !== "active" && (
+                    <Lock className="h-4 w-4 absolute -top-1 -right-1 text-destructive" />
+                  )}
+                </div>
+                <h3 className="font-semibold">My Pass</h3>
+                <p className="text-sm text-muted-foreground">
+                  {subscription?.status === "active"
+                    ? "View your digital QR membership"
+                    : "Locked - Subscribe to unlock"}
+                </p>
+              </div>
             </CardContent>
           </Card>
 
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer border-primary/10">
-            <CardHeader>
-              <MapPin className="h-8 w-8 text-primary mb-2" />
-              <CardTitle className="text-lg">Directory</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">
-                Explore partner locations and amenities
-              </p>
+          <Card
+            className={`border-primary/10 transition-all ${
+              subscription?.status === "active"
+                ? "hover:shadow-xl cursor-pointer hover:border-primary/30"
+                : "opacity-60"
+            }`}
+            {...(subscription?.status === "active" && {
+              onClick: () => navigate("/partners"),
+            })}
+          >
+            <CardContent className="pt-6">
+              <div className="flex flex-col items-center text-center gap-3">
+                <div className="p-3 bg-secondary/10 rounded-full relative">
+                  <MapPin className="h-8 w-8 text-secondary" />
+                  {subscription?.status !== "active" && (
+                    <Lock className="h-4 w-4 absolute -top-1 -right-1 text-destructive" />
+                  )}
+                </div>
+                <h3 className="font-semibold">Directory</h3>
+                <p className="text-sm text-muted-foreground">
+                  {subscription?.status === "active"
+                    ? "Find coworking spaces near you"
+                    : "Locked - Subscribe to access"}
+                </p>
+              </div>
             </CardContent>
           </Card>
 
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer border-primary/10">
-            <CardHeader>
-              <Gift className="h-8 w-8 text-secondary mb-2" />
-              <CardTitle className="text-lg">Offers</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">
-                Browse exclusive perks and discounts
-              </p>
+          <Card
+            className={`border-primary/10 transition-all ${
+              subscription?.status === "active"
+                ? "hover:shadow-xl cursor-pointer hover:border-primary/30"
+                : "opacity-60"
+            }`}
+            {...(subscription?.status === "active" && {
+              onClick: () => navigate("/perks"),
+            })}
+          >
+            <CardContent className="pt-6">
+              <div className="flex flex-col items-center text-center gap-3">
+                <div className="p-3 bg-primary/10 rounded-full relative">
+                  <Gift className="h-8 w-8 text-primary" />
+                  {subscription?.status !== "active" && (
+                    <Lock className="h-4 w-4 absolute -top-1 -right-1 text-destructive" />
+                  )}
+                </div>
+                <h3 className="font-semibold">Offers</h3>
+                <p className="text-sm text-muted-foreground">
+                  {subscription?.status === "active"
+                    ? "Exclusive member discounts"
+                    : "Locked - Subscribe to unlock"}
+                </p>
+              </div>
             </CardContent>
           </Card>
 
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer border-primary/10">
-            <CardHeader>
-              <CreditCard className="h-8 w-8 text-primary mb-2" />
-              <CardTitle className="text-lg">Billing</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">
-                Manage subscription and payment methods
-              </p>
+          <Card
+            className="border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30"
+            onClick={() => navigate("/billing")}
+          >
+            <CardContent className="pt-6">
+              <div className="flex flex-col items-center text-center gap-3">
+                <div className="p-3 bg-secondary/10 rounded-full">
+                  <Users className="h-8 w-8 text-secondary" />
+                </div>
+                <h3 className="font-semibold">Billing</h3>
+                <p className="text-sm text-muted-foreground">
+                  Manage your subscription
+                </p>
+              </div>
             </CardContent>
           </Card>
         </div>
 
-        {/* CTA for trial users */}
-        {member?.status === "trial" && (
-          <Card className="mt-8 bg-gradient-to-r from-secondary/10 to-secondary/5 border-secondary/20">
-            <CardHeader>
-              <CardTitle>Upgrade Your Membership</CardTitle>
-              <CardDescription>
-                Get full access to all partner locations and exclusive perks
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Button variant="hero" size="lg">
-                View Plans
+        {/* Trial or Inactive CTA */}
+        {(member.status === "trial" || !subscription || subscription.status !== "active") && (
+          <Card className="mt-8 bg-gradient-to-r from-secondary/10 to-primary/10 border-primary/20">
+            <CardContent className="py-8 text-center">
+              <h3 className="text-2xl font-bold mb-4">
+                {member.status === "trial" ? "Enjoying Your Trial?" : "Unlock Full Access"}
+              </h3>
+              <p className="text-muted-foreground mb-6 max-w-xl mx-auto">
+                {member.status === "trial"
+                  ? "Upgrade to a full membership to unlock unlimited access to all partner spaces"
+                  : "Subscribe now to access your digital pass, exclusive perks, and global coworking network"}
+              </p>
+              <Button asChild variant="premium" size="lg">
+                <Link to="/billing">View Plans</Link>
               </Button>
             </CardContent>
           </Card>
         )}
-      </div>
+      </main>
     </div>
   );
 };
