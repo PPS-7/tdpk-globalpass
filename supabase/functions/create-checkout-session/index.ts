@@ -17,7 +17,7 @@ Deno.serve(async (req) => {
       httpClient: Stripe.createFetchHttpClient(),
     });
 
-    const { planId, memberId } = await req.json();
+    const { planId, memberId, couponCode } = await req.json();
 
     if (!planId || !memberId) {
       return new Response(
@@ -77,7 +77,7 @@ Deno.serve(async (req) => {
     }
 
     // Create Checkout Session
-    const session = await stripe.checkout.sessions.create({
+    const sessionConfig: any = {
       customer: customerId,
       client_reference_id: memberId,
       line_items: [
@@ -103,7 +103,14 @@ Deno.serve(async (req) => {
         plan_id: planId,
         member_id: memberId,
       },
-    });
+    };
+
+    // Add coupon if provided
+    if (couponCode) {
+      sessionConfig.discounts = [{ coupon: couponCode }];
+    }
+
+    const session = await stripe.checkout.sessions.create(sessionConfig);
 
     return new Response(
       JSON.stringify({ url: session.url }),

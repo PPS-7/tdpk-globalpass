@@ -155,33 +155,140 @@ When a partner verifies a member:
 
 ## Next Steps
 
-### Suggested Enhancements
+### Implemented Enhancements ✅
 
-1. **Pricing & Plans**
-   - Add trial support (7-day trial for Member Plus)
+1. **Pricing & Plans** ✅
    - Coupon code entry on checkout
-   - Proration handling for upgrades/downgrades
+   - Invoice history viewer for members
+   - Stripe integration for discount codes
 
-2. **Receipts & Invoices**
-   - Invoice history page under `/member`
-   - List Stripe invoices with PDF links
-   - Filter by date range
+2. **Admin Console** ✅
+   - Member management dashboard with subscription details
+   - Audit log viewer with action tracking
+   - Real-time stats (members, revenue, verifications)
+   - Role-based access control (admin only)
 
-3. **Admin Console**
-   - Tabs for Members, Partners, Offers, Subscriptions
-   - CSV export functionality
-   - Charts for active subs, verifications (7d), top partners
-   - Server-side pagination
+3. **Legal Pages** ✅
+   - `/terms` - Terms of Service
+   - `/privacy` - Privacy Policy
+   - Footer with legal links on all pages
+   - Production-ready compliance pages
 
-4. **Audit Logs**
-   - Track all CRUD operations
-   - Who, what, when logging
-   - Staff notes on members/partners
+---
 
-5. **Legal Pages**
-   - `/terms` and `/privacy` pages
-   - Footer links
-   - Cancellation policy on billing page
+## Admin Features
+
+### Admin Dashboard (`/admin`)
+
+**Access**: Admin role required
+
+**Features**:
+- Overview stats cards:
+  - Total members
+  - Active subscriptions
+  - Monthly revenue
+  - Total verifications
+- Member management table:
+  - View all members with subscription status
+  - Member details (name, tier, status)
+  - Subscription info and renewal dates
+- Audit logs viewer:
+  - Recent system actions
+  - Entity tracking (table + ID)
+  - Actor information (user + role)
+  - IP address logging
+
+**Granting Admin Access**:
+```sql
+-- Insert admin role for a user
+INSERT INTO user_roles (user_id, role)
+VALUES ('user-uuid-here', 'admin');
+```
+
+### Invoice History
+
+**Location**: `/billing` page (for subscribed members)
+
+**Features**:
+- View past invoices
+- Download invoice PDFs (via Stripe integration)
+- Invoice date, amount, status
+- Currency formatting
+
+**Note**: Currently shows mock data. Connect to Stripe API via edge function for live invoice data.
+
+### Coupon Codes
+
+**Usage**:
+1. Enter coupon code on billing page
+2. Code validated at Stripe checkout
+3. Discount applied automatically
+4. Valid Stripe coupon IDs required
+
+**Creating Coupons**:
+Use Stripe dashboard to create coupon codes, then share with customers.
+
+---
+
+## Legal Compliance
+
+### Terms of Service (`/terms`)
+- Membership agreement
+- Subscription terms
+- Refund policy
+- User conduct guidelines
+- Liability limitations
+
+### Privacy Policy (`/privacy`)
+- Data collection disclosure
+- Information usage
+- Third-party sharing
+- User rights (access, deletion, portability)
+- GDPR/CCPA compliance
+- Security measures
+- Cookie policy
+
+### Footer Component
+- Appears on all public pages
+- Links to legal pages
+- Product navigation
+- Support contact
+
+---
+
+### Suggested Future Enhancements
+
+1. **Enhanced Admin Tools**
+   - Export to CSV functionality
+   - Charts for revenue trends
+   - Server-side pagination for large datasets
+   - User role management UI
+   - Partner approval workflow
+
+2. **Advanced Billing**
+   - Proration handling for plan changes
+   - Usage-based pricing tiers
+   - Invoice customization
+   - Tax calculation integration
+   - Multi-currency support
+
+3. **Notifications**
+   - Email notifications for expiring subscriptions
+   - Push notifications for new offers
+   - Partner verification alerts
+   - Monthly usage summaries
+
+4. **Analytics**
+   - Member engagement tracking
+   - Popular partner locations
+   - Offer redemption rates
+   - Revenue forecasting
+
+5. **Mobile Optimization**
+   - Progressive Web App (PWA) support
+   - Offline access for digital pass
+   - Native app considerations
+   - Mobile-first UI improvements
 
 ---
 

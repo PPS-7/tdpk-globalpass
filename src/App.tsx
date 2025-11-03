@@ -8,6 +8,7 @@ import Auth from "./pages/Auth";
 import MemberDashboard from "./pages/MemberDashboard";
 import PartnerDashboard from "./pages/PartnerDashboard";
 import PartnerVerification from "./pages/PartnerVerification";
+import AdminDashboard from "./pages/AdminDashboard";
 import Billing from "./pages/Billing";
 import CoworkingSpaces from "./pages/CoworkingSpaces";
 import PartnerList from "./pages/PartnerList";
@@ -16,6 +17,8 @@ import ExclusivePerks from "./pages/ExclusivePerks";
 import InstantVerification from "./pages/InstantVerification";
 import TenantPrivilege from "./pages/TenantPrivilege";
 import DigitalPass from "./pages/DigitalPass";
+import TermsOfService from "./pages/TermsOfService";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -32,6 +35,7 @@ const App = () => (
           <Route path="/member" element={<MemberDashboard />} />
           <Route path="/partner" element={<PartnerDashboard />} />
           <Route path="/partner/verify" element={<PartnerVerification />} />
+          <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/billing" element={<Billing />} />
           <Route path="/spaces" element={<CoworkingSpaces />} />
           <Route path="/partners" element={<PartnerList />} />
@@ -40,6 +44,8 @@ const App = () => (
           <Route path="/verification" element={<InstantVerification />} />
           <Route path="/tenant-privilege" element={<TenantPrivilege />} />
           <Route path="/digital-pass" element={<DigitalPass />} />
+          <Route path="/terms" element={<TermsOfService />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

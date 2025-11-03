@@ -3,9 +3,11 @@ import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, CheckCircle2, CreditCard, Loader2 } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { ArrowLeft, CheckCircle2, CreditCard, Loader2, Tag } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import InvoiceHistory from "@/components/InvoiceHistory";
 
 interface Plan {
   id: string;
@@ -34,6 +36,7 @@ const Billing = () => {
   const [plans, setPlans] = useState<Plan[]>([]);
   const [subscription, setSubscription] = useState<Subscription | null>(null);
   const [checkoutLoading, setCheckoutLoading] = useState<string | null>(null);
+  const [couponCode, setCouponCode] = useState("");
 
   useEffect(() => {
     checkAuth();
@@ -91,7 +94,7 @@ const Billing = () => {
     setCheckoutLoading(planId);
     try {
       const { data, error } = await supabase.functions.invoke("create-checkout-session", {
-        body: { planId, memberId }
+        body: { planId, memberId, couponCode: couponCode || undefined }
       });
 
       if (error) throw error;
@@ -197,11 +200,48 @@ const Billing = () => {
           </Card>
         ) : null}
 
-        <div className="text-center mb-12">
+        {subscription && subscription.status === "active" && memberId && (
+          <InvoiceHistory memberId={memberId} />
+        )}
+
+        <div className="text-center mb-8 mt-12">
           <h2 className="text-4xl font-bold mb-4">Choose Your Plan</h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-6">
             Select a yearly subscription that fits your coworking needs
           </p>
+          
+          <Card className="max-w-md mx-auto mb-8">
+            <CardContent className="pt-6">
+              <div className="flex gap-2">
+                <div className="relative flex-1">
+                  <Tag className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    placeholder="Enter coupon code"
+                    value={couponCode}
+                    onChange={(e) => setCouponCode(e.target.value)}
+                    className="pl-9"
+                  />
+                </div>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    if (couponCode) {
+                      toast({
+                        title: "Coupon Applied",
+                        description: "Your discount will be applied at checkout",
+                      });
+                    }
+                  }}
+                  disabled={!couponCode}
+                >
+                  Apply
+                </Button>
+              </div>
+              <p className="text-xs text-muted-foreground mt-2">
+                Have a coupon? Enter it here for a discount
+              </p>
+            </CardContent>
+          </Card>
         </div>
 
         <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
