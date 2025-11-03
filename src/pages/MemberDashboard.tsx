@@ -18,6 +18,7 @@ interface MemberData {
 
 const MemberDashboard = () => {
   const [member, setMember] = useState<MemberData | null>(null);
+  const [subscription, setSubscription] = useState<Subscription | null>(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const { toast } = useToast();

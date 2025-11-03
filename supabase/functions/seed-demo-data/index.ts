@@ -220,27 +220,44 @@ Deno.serve(async (req) => {
           console.error(`Failed to create member for ${user.email}:`, memberError);
         }
 
-        // Create subscription for paid members
-        if (user.profile.tier === 'Member' || user.profile.tier === 'Global') {
-          const planCode = user.profile.tier === 'Global' ? 'GLOBAL_THB_599' : 'MEMBER_THB_299';
+        // Create demo subscription for paid members (fake active subscription)
+        if (user.profile.tier === 'Member' || user.profile.tier === 'Global' || user.profile.tier === 'Tenant') {
+          let planCode = 'MEMBER_THB_1188';
+          let amount = 118800;
+          
+          if (user.profile.tier === 'Global') {
+            planCode = 'GLOBAL_THB_3588';
+            amount = 358800;
+          } else if (user.profile.tier === 'Tenant') {
+            planCode = 'MEMBER_PLUS_THB_2388';
+            amount = 238800;
+          }
+
           const { data: plan } = await supabaseAdmin
             .from('plans')
             .select('id')
             .eq('code', planCode)
-            .single();
+            .maybeSingle();
 
           if (plan) {
+            const now = new Date();
+            const oneYearFromNow = new Date(now.getTime() + 365 * 24 * 60 * 60 * 1000);
+            
             await supabaseAdmin
               .from('subscriptions')
               .upsert({
                 member_id: userId,
                 provider: 'stripe',
+                provider_customer_id: `demo_cus_${userId.substring(0, 8)}`,
+                provider_sub_id: `demo_sub_${userId.substring(0, 8)}`,
+                stripe_customer_id: `demo_cus_${userId.substring(0, 8)}`,
+                stripe_subscription_id: `demo_sub_${userId.substring(0, 8)}`,
                 plan_id: plan.id,
                 currency: 'THB',
-                amount: user.profile.tier === 'Global' ? 59900 : 29900,
+                amount: amount,
                 status: 'active',
-                current_period_start: new Date().toISOString(),
-                current_period_end: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
+                current_period_start: now.toISOString(),
+                current_period_end: oneYearFromNow.toISOString()
               }, { onConflict: 'member_id' });
           }
         }

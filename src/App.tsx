@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import MemberDashboard from "./pages/MemberDashboard";
 import PartnerDashboard from "./pages/PartnerDashboard";
+import Billing from "./pages/Billing";
 import CoworkingSpaces from "./pages/CoworkingSpaces";
 import PartnerList from "./pages/PartnerList";
 import ExclusivePerks from "./pages/ExclusivePerks";
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/auth" element={<Auth />} />
           <Route path="/member" element={<MemberDashboard />} />
           <Route path="/partner" element={<PartnerDashboard />} />
+          <Route path="/billing" element={<Billing />} />
           <Route path="/spaces" element={<CoworkingSpaces />} />
           <Route path="/partners" element={<PartnerList />} />
           <Route path="/perks" element={<ExclusivePerks />} />
