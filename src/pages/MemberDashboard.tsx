@@ -6,6 +6,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Loader2, CreditCard, MapPin, Gift, Users, LogOut, Lock, QrCode } from "lucide-react";
 import tdpkLogo from "@/assets/tdpk-logo.png";
+import { GlobalSearch } from "@/components/GlobalSearch";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { useTranslation } from "react-i18next";
 
 interface MemberData {
   id: string;
@@ -24,6 +27,7 @@ const MemberDashboard = () => {
   const [subscription, setSubscription] = useState<Subscription | null>(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   useEffect(() => {
     checkAuth();
@@ -106,13 +110,17 @@ const MemberDashboard = () => {
     <div className="min-h-screen bg-gradient-to-br from-background via-muted/30 to-background">
       {/* Header */}
       <header className="bg-card/50 backdrop-blur-sm border-b border-border sticky top-0 z-10">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between gap-4">
           <div className="flex items-center">
             <img src={tdpkLogo} alt="True Digital Park" className="h-8" />
           </div>
-          <Button variant="ghost" size="icon" onClick={handleSignOut}>
-            <LogOut className="h-5 w-5" />
-          </Button>
+          <GlobalSearch />
+          <div className="flex items-center gap-2">
+            <LanguageSwitcher />
+            <Button variant="ghost" size="icon" onClick={handleSignOut}>
+              <LogOut className="h-5 w-5" />
+            </Button>
+          </div>
         </div>
       </header>
 

@@ -79,7 +79,10 @@ const PartnerDashboard = () => {
 
         {/* Quick Actions */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer border-primary/10">
+          <Card
+            className="hover:shadow-lg transition-shadow cursor-pointer border-primary/10"
+            onClick={() => navigate("/partner/verify")}
+          >
             <CardHeader>
               <Scan className="h-8 w-8 text-secondary mb-2" />
               <CardTitle className="text-lg">Scan & Verify</CardTitle>

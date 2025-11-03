@@ -7,9 +7,11 @@ import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import MemberDashboard from "./pages/MemberDashboard";
 import PartnerDashboard from "./pages/PartnerDashboard";
+import PartnerVerification from "./pages/PartnerVerification";
 import Billing from "./pages/Billing";
 import CoworkingSpaces from "./pages/CoworkingSpaces";
 import PartnerList from "./pages/PartnerList";
+import DirectoryWithMap from "./pages/DirectoryWithMap";
 import ExclusivePerks from "./pages/ExclusivePerks";
 import InstantVerification from "./pages/InstantVerification";
 import TenantPrivilege from "./pages/TenantPrivilege";
@@ -29,9 +31,11 @@ const App = () => (
           <Route path="/auth" element={<Auth />} />
           <Route path="/member" element={<MemberDashboard />} />
           <Route path="/partner" element={<PartnerDashboard />} />
+          <Route path="/partner/verify" element={<PartnerVerification />} />
           <Route path="/billing" element={<Billing />} />
           <Route path="/spaces" element={<CoworkingSpaces />} />
           <Route path="/partners" element={<PartnerList />} />
+          <Route path="/directory" element={<DirectoryWithMap />} />
           <Route path="/perks" element={<ExclusivePerks />} />
           <Route path="/verification" element={<InstantVerification />} />
           <Route path="/tenant-privilege" element={<TenantPrivilege />} />
