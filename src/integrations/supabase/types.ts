@@ -146,6 +146,7 @@ export type Database = {
           partner_id: string
           price_amount: number | null
           price_currency: string | null
+          redemption_instructions: string | null
           rules_json: Json | null
           status: string
           title: string
@@ -163,6 +164,7 @@ export type Database = {
           partner_id: string
           price_amount?: number | null
           price_currency?: string | null
+          redemption_instructions?: string | null
           rules_json?: Json | null
           status?: string
           title: string
@@ -180,6 +182,7 @@ export type Database = {
           partner_id?: string
           price_amount?: number | null
           price_currency?: string | null
+          redemption_instructions?: string | null
           rules_json?: Json | null
           status?: string
           title?: string
@@ -242,13 +245,17 @@ export type Database = {
       partners: {
         Row: {
           address: string | null
+          amenities: string[] | null
           country_code: string
           created_at: string
           display_name: string
           id: string
+          images: string[] | null
+          is_active: boolean | null
           lat: number | null
           legal_name: string
           lng: number | null
+          phone: string | null
           primary_contact_email: string | null
           primary_contact_name: string | null
           region: Database["public"]["Enums"]["partner_region"]
@@ -256,16 +263,21 @@ export type Database = {
           tax_profile_json: Json | null
           timezone: string | null
           updated_at: string
+          website: string | null
         }
         Insert: {
           address?: string | null
+          amenities?: string[] | null
           country_code: string
           created_at?: string
           display_name: string
           id?: string
+          images?: string[] | null
+          is_active?: boolean | null
           lat?: number | null
           legal_name: string
           lng?: number | null
+          phone?: string | null
           primary_contact_email?: string | null
           primary_contact_name?: string | null
           region?: Database["public"]["Enums"]["partner_region"]
@@ -273,16 +285,21 @@ export type Database = {
           tax_profile_json?: Json | null
           timezone?: string | null
           updated_at?: string
+          website?: string | null
         }
         Update: {
           address?: string | null
+          amenities?: string[] | null
           country_code?: string
           created_at?: string
           display_name?: string
           id?: string
+          images?: string[] | null
+          is_active?: boolean | null
           lat?: number | null
           legal_name?: string
           lng?: number | null
+          phone?: string | null
           primary_contact_email?: string | null
           primary_contact_name?: string | null
           region?: Database["public"]["Enums"]["partner_region"]
@@ -290,6 +307,7 @@ export type Database = {
           tax_profile_json?: Json | null
           timezone?: string | null
           updated_at?: string
+          website?: string | null
         }
         Relationships: []
       }
@@ -467,6 +485,8 @@ export type Database = {
           provider_customer_id: string | null
           provider_sub_id: string | null
           status: Database["public"]["Enums"]["subscription_status"]
+          stripe_customer_id: string | null
+          stripe_subscription_id: string | null
           updated_at: string
         }
         Insert: {
@@ -483,6 +503,8 @@ export type Database = {
           provider_customer_id?: string | null
           provider_sub_id?: string | null
           status?: Database["public"]["Enums"]["subscription_status"]
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
           updated_at?: string
         }
         Update: {
@@ -499,6 +521,8 @@ export type Database = {
           provider_customer_id?: string | null
           provider_sub_id?: string | null
           status?: Database["public"]["Enums"]["subscription_status"]
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
           updated_at?: string
         }
         Relationships: [
