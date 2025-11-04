@@ -6,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import tdpkLogo from "@/assets/tdpk-logo.png";
+import tdpkBuilding from "@/assets/tdpk-building.png";
 import Footer from "@/components/Footer";
 
 const Index = () => {
@@ -37,30 +38,41 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-muted/30 to-background">
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-20 text-center">
-        <div className="flex items-center justify-center mb-6">
-          <img src={tdpkLogo} alt="True Digital Park" className="h-20 md:h-28" />
-        </div>
-        <p className="text-xl md:text-2xl text-muted-foreground mb-4">
-          Your Global Coworking Network Pass
-        </p>
-        <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
-          Access premium coworking spaces across Asia with one membership. 
-          Work anywhere, connect everywhere.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <Button asChild size="lg" variant="hero" className="min-w-[200px]">
-            <Link to="/auth">Get Started</Link>
-          </Button>
-          <Button 
-            onClick={handleSeedDemoData} 
-            disabled={seeding}
-            size="lg" 
-            variant="outline" 
-            className="min-w-[200px]"
-          >
-            {seeding ? "Seeding..." : "Setup Demo Data"}
-          </Button>
+      <section 
+        className="relative container mx-auto px-4 py-20 text-center overflow-hidden"
+        style={{
+          backgroundImage: `url(${tdpkBuilding})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]" />
+        <div className="relative z-10">
+          <div className="flex items-center justify-center mb-6">
+            <img src={tdpkLogo} alt="True Digital Park" className="h-20 md:h-28 drop-shadow-2xl" />
+          </div>
+          <p className="text-xl md:text-2xl text-white font-semibold mb-4 drop-shadow-lg">
+            Your Global Coworking Network Pass
+          </p>
+          <p className="text-lg text-white/90 max-w-2xl mx-auto mb-8 drop-shadow-md">
+            Access premium coworking spaces across Asia with one membership. 
+            Work anywhere, connect everywhere.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <Button asChild size="lg" variant="hero" className="min-w-[200px]">
+              <Link to="/auth">Get Started</Link>
+            </Button>
+            <Button 
+              onClick={handleSeedDemoData} 
+              disabled={seeding}
+              size="lg" 
+              variant="outline" 
+              className="min-w-[200px] bg-white/10 text-white border-white/30 hover:bg-white/20"
+            >
+              {seeding ? "Seeding..." : "Setup Demo Data"}
+            </Button>
+          </div>
         </div>
       </section>
 
