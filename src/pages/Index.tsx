@@ -47,7 +47,7 @@ const Index = () => {
           backgroundRepeat: 'no-repeat'
         }}
       >
-        <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]" />
+        <div className="absolute inset-0 bg-black/40" />
         <div className="relative z-10">
           <div className="flex items-center justify-center mb-6">
             <img src={tdpkLogo} alt="True Digital Park" className="h-20 md:h-28 drop-shadow-2xl" />
