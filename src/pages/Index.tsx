@@ -38,41 +38,30 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-muted/30 to-background">
       {/* Hero Section */}
-      <section 
-        className="relative container mx-auto px-4 py-20 text-center overflow-hidden"
-        style={{
-          backgroundImage: `url(${tdpkBuilding})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}
-      >
-        <div className="absolute inset-0 bg-black/40" />
-        <div className="relative z-10">
-          <div className="flex items-center justify-center mb-6">
-            <img src={tdpkLogo} alt="True Digital Park" className="h-20 md:h-28 drop-shadow-2xl" />
-          </div>
-          <p className="text-xl md:text-2xl text-white font-semibold mb-4 drop-shadow-lg">
-            Your Global Coworking Network Pass
-          </p>
-          <p className="text-lg text-white/90 max-w-2xl mx-auto mb-8 drop-shadow-md">
-            Access premium coworking spaces across Asia with one membership. 
-            Work anywhere, connect everywhere.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button asChild size="lg" variant="hero" className="min-w-[200px]">
-              <Link to="/auth">Get Started</Link>
-            </Button>
-            <Button 
-              onClick={handleSeedDemoData} 
-              disabled={seeding}
-              size="lg" 
-              variant="outline" 
-              className="min-w-[200px] bg-white/10 text-white border-white/30 hover:bg-white/20"
-            >
-              {seeding ? "Seeding..." : "Setup Demo Data"}
-            </Button>
-          </div>
+      <section className="container mx-auto px-4 py-20 text-center">
+        <div className="flex items-center justify-center mb-6">
+          <img src={tdpkLogo} alt="True Digital Park" className="h-20 md:h-28" />
+        </div>
+        <p className="text-xl md:text-2xl text-foreground font-semibold mb-4">
+          Your Global Coworking Network Pass
+        </p>
+        <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
+          Access premium coworking spaces across Asia with one membership. 
+          Work anywhere, connect everywhere.
+        </p>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <Button asChild size="lg" variant="hero" className="min-w-[200px]">
+            <Link to="/auth">Get Started</Link>
+          </Button>
+          <Button 
+            onClick={handleSeedDemoData} 
+            disabled={seeding}
+            size="lg" 
+            variant="outline" 
+            className="min-w-[200px]"
+          >
+            {seeding ? "Seeding..." : "Setup Demo Data"}
+          </Button>
         </div>
       </section>
 
@@ -87,10 +76,17 @@ const Index = () => {
                     <Globe className="h-6 w-6 text-secondary" />
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-2">Global Access</h3>
-                    <p className="text-sm text-muted-foreground">
-                      Access partner spaces across Thailand, Japan, Taiwan, and beyond
+                    <h3 className="font-semibold mb-2">True Digital Park Ecosystem Partner Directory</h3>
+                    <p className="text-sm text-muted-foreground mb-2">
+                      Discover our ecosystem partners across 5 categories:
                     </p>
+                    <ul className="text-xs text-muted-foreground space-y-1">
+                      <li>• Corporates</li>
+                      <li>• Startups & SMEs</li>
+                      <li>• Universities & Academies</li>
+                      <li>• Government & Associations</li>
+                      <li>• Investors (VCs, CVCs, Angel Investors)</li>
+                    </ul>
                   </div>
                 </div>
               </CardContent>
@@ -105,9 +101,9 @@ const Index = () => {
                     <MapPin className="h-6 w-6 text-primary" />
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-2">Smart Directory</h3>
+                    <h3 className="font-semibold mb-2">Global Coworking Partner Directory</h3>
                     <p className="text-sm text-muted-foreground">
-                      Find and navigate to nearby coworking spaces with ease
+                      Find and navigate to coworking partner spaces worldwide
                     </p>
                   </div>
                 </div>
