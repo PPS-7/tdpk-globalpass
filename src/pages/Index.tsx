@@ -67,15 +67,15 @@ const Index = () => {
 
       {/* Features Grid */}
       <section className="container mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <Link to="/partners">
-            <Card className="border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30">
-              <CardContent className="pt-6">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-secondary/10 rounded-lg">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr">
+          <Link to="/partners" className="h-full">
+            <Card className="border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30 h-full">
+              <CardContent className="pt-6 h-full flex flex-col">
+                <div className="flex items-start gap-4 flex-1">
+                  <div className="p-3 bg-secondary/10 rounded-lg flex-shrink-0">
                     <Globe className="h-6 w-6 text-secondary" />
                   </div>
-                  <div>
+                  <div className="flex-1">
                     <h3 className="font-semibold mb-2">True Digital Park Ecosystem Partner Directory</h3>
                     <p className="text-sm text-muted-foreground mb-2">
                       Discover our ecosystem partners across 5 categories:
@@ -93,15 +93,15 @@ const Index = () => {
             </Card>
           </Link>
 
-          <Link to="/spaces">
-            <Card className="border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30">
-              <CardContent className="pt-6">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-primary/10 rounded-lg">
+          <Link to="/spaces" className="h-full">
+            <Card className="border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30 h-full">
+              <CardContent className="pt-6 h-full flex flex-col">
+                <div className="flex items-start gap-4 flex-1">
+                  <div className="p-3 bg-primary/10 rounded-lg flex-shrink-0">
                     <MapPin className="h-6 w-6 text-primary" />
                   </div>
-                  <div>
-                    <h3 className="font-semibold mb-2">Global Coworking Partner Directory</h3>
+                  <div className="flex-1">
+                    <h3 className="font-semibold mb-2">Global Coworking Space Partner Directory</h3>
                     <p className="text-sm text-muted-foreground">
                       Find and navigate to coworking partner spaces worldwide
                     </p>
@@ -111,14 +111,14 @@ const Index = () => {
             </Card>
           </Link>
 
-          <Link to="/perks">
-            <Card className="border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30">
-              <CardContent className="pt-6">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-secondary/10 rounded-lg">
+          <Link to="/perks" className="h-full">
+            <Card className="border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30 h-full">
+              <CardContent className="pt-6 h-full flex flex-col">
+                <div className="flex items-start gap-4 flex-1">
+                  <div className="p-3 bg-secondary/10 rounded-lg flex-shrink-0">
                     <Gift className="h-6 w-6 text-secondary" />
                   </div>
-                  <div>
+                  <div className="flex-1">
                     <h3 className="font-semibold mb-2">Exclusive Perks</h3>
                     <p className="text-sm text-muted-foreground">
                       Unlock special offers and discounts at partner locations
@@ -129,14 +129,14 @@ const Index = () => {
             </Card>
           </Link>
 
-          <Link to="/verification">
-            <Card className="border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30">
-              <CardContent className="pt-6">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-primary/10 rounded-lg">
+          <Link to="/verification" className="h-full">
+            <Card className="border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30 h-full">
+              <CardContent className="pt-6 h-full flex flex-col">
+                <div className="flex items-start gap-4 flex-1">
+                  <div className="p-3 bg-primary/10 rounded-lg flex-shrink-0">
                     <Zap className="h-6 w-6 text-primary" />
                   </div>
-                  <div>
+                  <div className="flex-1">
                     <h3 className="font-semibold mb-2">Instant Verification</h3>
                     <p className="text-sm text-muted-foreground">
                       Quick QR code scanning for seamless check-ins
@@ -147,14 +147,14 @@ const Index = () => {
             </Card>
           </Link>
 
-          <Link to="/tenant-privilege">
-            <Card className="border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30">
-              <CardContent className="pt-6">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-secondary/10 rounded-lg">
+          <Link to="/tenant-privilege" className="h-full">
+            <Card className="border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30 h-full">
+              <CardContent className="pt-6 h-full flex flex-col">
+                <div className="flex items-start gap-4 flex-1">
+                  <div className="p-3 bg-secondary/10 rounded-lg flex-shrink-0">
                     <Shield className="h-6 w-6 text-secondary" />
                   </div>
-                  <div>
+                  <div className="flex-1">
                     <h3 className="font-semibold mb-2">Tenant Privilege</h3>
                     <p className="text-sm text-muted-foreground">
                       Special benefits for office tenants in the network
@@ -165,14 +165,14 @@ const Index = () => {
             </Card>
           </Link>
 
-          <Link to="/digital-pass">
-            <Card className="border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30">
-              <CardContent className="pt-6">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-primary/10 rounded-lg">
+          <Link to="/digital-pass" className="h-full">
+            <Card className="border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30 h-full">
+              <CardContent className="pt-6 h-full flex flex-col">
+                <div className="flex items-start gap-4 flex-1">
+                  <div className="p-3 bg-primary/10 rounded-lg flex-shrink-0">
                     <Sparkles className="h-6 w-6 text-primary" />
                   </div>
-                  <div>
+                  <div className="flex-1">
                     <h3 className="font-semibold mb-2">Digital Pass</h3>
                     <p className="text-sm text-muted-foreground">
                       Your membership in your pocket, always accessible
