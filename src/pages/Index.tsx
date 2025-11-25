@@ -77,16 +77,9 @@ const Index = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold mb-2">True Digital Park Ecosystem Partner Directory</h3>
-                    <p className="text-sm text-muted-foreground mb-2">
-                      Discover our ecosystem partners across 5 categories:
+                    <p className="text-sm text-muted-foreground">
+                      Access 5 partner categories across Asia
                     </p>
-                    <ul className="text-xs text-muted-foreground space-y-1">
-                      <li>• Corporates</li>
-                      <li>• Startups & SMEs</li>
-                      <li>• Universities & Academies</li>
-                      <li>• Government & Associations</li>
-                      <li>• Investors (VCs, CVCs, Angel Investors)</li>
-                    </ul>
                   </div>
                 </div>
               </CardContent>

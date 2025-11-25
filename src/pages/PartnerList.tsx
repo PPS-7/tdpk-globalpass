@@ -1,8 +1,11 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, MapPin, Building2, Globe, CheckCircle2, Briefcase, Rocket, GraduationCap, Landmark, TrendingUp } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ArrowLeft, MapPin, Building2, Globe, CheckCircle2, Briefcase, Rocket, GraduationCap, Landmark, TrendingUp, Search } from "lucide-react";
 
 type PartnerCategory = "Corporates" | "Startups & SMEs" | "Universities & Academies" | "Government & Associations" | "Investors";
 
@@ -198,6 +201,7 @@ const categoryIcons: Record<PartnerCategory, any> = {
 };
 
 const PartnerList = () => {
+  const [searchQuery, setSearchQuery] = useState("");
   const categories: PartnerCategory[] = [
     "Corporates",
     "Startups & SMEs",
@@ -205,6 +209,16 @@ const PartnerList = () => {
     "Government & Associations",
     "Investors"
   ];
+
+  const filterPartners = (category: PartnerCategory) => {
+    return partners.filter(p => 
+      p.category === category && 
+      (searchQuery === "" || 
+       p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+       p.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
+       p.type.toLowerCase().includes(searchQuery.toLowerCase()))
+    );
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-muted/30 to-background">
@@ -235,82 +249,99 @@ const PartnerList = () => {
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-6">
           Discover our ecosystem partners across 5 categories
         </p>
-        <div className="flex flex-wrap gap-2 justify-center">
-          {categories.map(category => {
-            const Icon = categoryIcons[category];
-            const count = partners.filter(p => p.category === category).length;
-            return (
-              <Badge key={category} variant="outline" className="px-4 py-2">
-                <Icon className="h-3 w-3 mr-1" />
-                {category} ({count})
-              </Badge>
-            );
-          })}
+        
+        {/* Search Bar */}
+        <div className="max-w-md mx-auto mb-8">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              type="text"
+              placeholder="Search partners by name, location, or type..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-10"
+            />
+          </div>
         </div>
       </section>
 
-      {/* Partners by Category */}
+      {/* Partners by Category with Tabs */}
       <section className="container mx-auto px-4 pb-16">
-        {categories.map(category => {
-          const categoryPartners = partners.filter(p => p.category === category);
-          const CategoryIcon = categoryIcons[category];
-          
-          return (
-            <div key={category} className="mb-12">
-              <div className="flex items-center gap-3 mb-6">
-                <CategoryIcon className="h-6 w-6 text-primary" />
-                <h3 className="text-2xl font-bold">{category}</h3>
-                <Badge variant="secondary">{categoryPartners.length}</Badge>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {categoryPartners.map(partner => (
-                  <Card key={partner.id} className="border-primary/10 hover:shadow-xl transition-all hover:border-primary/30">
-                    <CardHeader>
-                      <div className="flex items-start justify-between gap-2">
-                        <div>
-                          <CardTitle className="text-lg flex items-center gap-2">
-                            {partner.name}
-                            {partner.verified && (
-                              <CheckCircle2 className="h-4 w-4 text-secondary" />
-                            )}
-                          </CardTitle>
-                          <p className="text-sm text-muted-foreground mt-1">
-                            {partner.description}
-                          </p>
-                        </div>
-                      </div>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-4">
-                        <div className="flex items-center gap-2 text-sm">
-                          <Building2 className="h-4 w-4 text-primary" />
-                          <span className="font-medium">{partner.type}</span>
-                        </div>
-                        
-                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                          <MapPin className="h-4 w-4" />
-                          <span>{partner.location}</span>
-                        </div>
+        <Tabs defaultValue="Corporates" className="w-full">
+          <TabsList className="grid w-full grid-cols-5 mb-8">
+            {categories.map(category => {
+              const Icon = categoryIcons[category];
+              const count = filterPartners(category).length;
+              return (
+                <TabsTrigger key={category} value={category} className="flex items-center gap-2">
+                  <Icon className="h-4 w-4" />
+                  <span className="hidden md:inline">{category}</span>
+                  <Badge variant="secondary" className="ml-1">{count}</Badge>
+                </TabsTrigger>
+              );
+            })}
+          </TabsList>
 
-                        <div>
-                          <p className="text-xs font-medium mb-2 text-muted-foreground">Key Features</p>
-                          <div className="flex flex-wrap gap-1">
-                            {partner.features.map(feature => (
-                              <Badge key={feature} variant="secondary" className="text-xs">
-                                {feature}
-                              </Badge>
-                            ))}
+          {categories.map(category => {
+            const categoryPartners = filterPartners(category);
+            
+            return (
+              <TabsContent key={category} value={category}>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {categoryPartners.length > 0 ? (
+                    categoryPartners.map(partner => (
+                      <Card key={partner.id} className="border-primary/10 hover:shadow-xl transition-all hover:border-primary/30">
+                        <CardHeader>
+                          <div className="flex items-start justify-between gap-2">
+                            <div>
+                              <CardTitle className="text-lg flex items-center gap-2">
+                                {partner.name}
+                                {partner.verified && (
+                                  <CheckCircle2 className="h-4 w-4 text-secondary" />
+                                )}
+                              </CardTitle>
+                              <p className="text-sm text-muted-foreground mt-1">
+                                {partner.description}
+                              </p>
+                            </div>
                           </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </div>
-          );
-        })}
+                        </CardHeader>
+                        <CardContent>
+                          <div className="space-y-4">
+                            <div className="flex items-center gap-2 text-sm">
+                              <Building2 className="h-4 w-4 text-primary" />
+                              <span className="font-medium">{partner.type}</span>
+                            </div>
+                            
+                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                              <MapPin className="h-4 w-4" />
+                              <span>{partner.location}</span>
+                            </div>
+
+                            <div>
+                              <p className="text-xs font-medium mb-2 text-muted-foreground">Key Features</p>
+                              <div className="flex flex-wrap gap-1">
+                                {partner.features.map(feature => (
+                                  <Badge key={feature} variant="secondary" className="text-xs">
+                                    {feature}
+                                  </Badge>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))
+                  ) : (
+                    <div className="col-span-full text-center py-12">
+                      <p className="text-muted-foreground">No partners found matching your search.</p>
+                    </div>
+                  )}
+                </div>
+              </TabsContent>
+            );
+          })}
+        </Tabs>
       </section>
 
       {/* CTA Section */}
