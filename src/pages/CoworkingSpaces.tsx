@@ -1,4 +1,4 @@
-import { MapPin, Users, Wifi, Coffee, Calendar, Search, Building2, Briefcase } from "lucide-react";
+import { MapPin, Users, Wifi, Coffee, Calendar, Search } from "lucide-react";
 import { StandardCard } from "@/components/ui/standard-card";
 import { CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -15,18 +15,6 @@ interface CoworkingSpace {
   description: string;
   amenities: string[];
   members: number;
-  image: string;
-}
-
-interface OfficeSpace {
-  id: string;
-  name: string;
-  type: "Fully Furnished" | "White Box";
-  location: string;
-  description: string;
-  features: string[];
-  availableUnits: string[];
-  priceRange: string;
   image: string;
 }
 
@@ -160,42 +148,6 @@ const coworkingSpaces: CoworkingSpace[] = [
     amenities: ["High-Speed WiFi", "Meeting Pods", "Game Room", "Pantry", "Community Events"],
     members: 520,
     image: "https://images.unsplash.com/photo-1497366858526-0766cadbe8fa?w=800&auto=format&fit=crop"
-  }
-];
-
-const officeSpaces: OfficeSpace[] = [
-  {
-    id: "off-1",
-    name: "True Digital Park - Tower A",
-    type: "Fully Furnished",
-    location: "Bangkok, Thailand",
-    description: "Move-in ready office spaces with premium furniture, complete IT infrastructure, and modern design. Perfect for teams ready to start immediately.",
-    features: ["Ergonomic Furniture", "Meeting Rooms Included", "IT Infrastructure", "Pantry Setup", "Reception Area", "Flexible Lease Terms"],
-    availableUnits: ["2-4 person unit", "5-10 person unit", "11-20 person unit", "20+ person unit"],
-    priceRange: "฿25,000 - ฿180,000/month",
-    image: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=800&auto=format&fit=crop"
-  },
-  {
-    id: "off-2",
-    name: "True Digital Park - Tower B",
-    type: "White Box",
-    location: "Bangkok, Thailand",
-    description: "Customizable office spaces with basic infrastructure. Design and build your ideal workspace to match your brand and culture.",
-    features: ["Bare Shell Space", "Basic HVAC", "Electrical Setup", "Fire Safety Systems", "Access Control Ready", "Custom Layout Possible"],
-    availableUnits: ["50-100 sqm", "100-200 sqm", "200-500 sqm", "500+ sqm"],
-    priceRange: "฿500 - ฿800/sqm/month",
-    image: "https://images.unsplash.com/photo-1497366858526-0766cadbe8fa?w=800&auto=format&fit=crop"
-  },
-  {
-    id: "off-3",
-    name: "True Space - Premium Suites",
-    type: "Fully Furnished",
-    location: "Bangkok, Thailand",
-    description: "Boutique office suites with designer interiors and premium amenities. Ideal for established teams seeking a prestigious address.",
-    features: ["Designer Interiors", "Premium Furniture", "Private Meeting Rooms", "Concierge Service", "Business Lounge Access", "Reserved Parking"],
-    availableUnits: ["Executive suite (2-3 person)", "Team suite (4-8 person)", "Department suite (9-15 person)", "Corporate floor (16+ person)"],
-    priceRange: "฿35,000 - ฿250,000/month",
-    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&auto=format&fit=crop"
   }
 ];
 
@@ -375,108 +327,6 @@ const CoworkingSpaces = () => {
               </StandardCard>
             ))
           )}
-        </div>
-
-        {/* Divider */}
-        <div className="my-20">
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-border"></div>
-            </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-4 bg-background text-muted-foreground">
-                <Building2 className="inline w-5 h-5 mr-2" />
-                Office Solutions
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {/* Office Space Solutions Section */}
-        <div>
-          <div className="text-center max-w-3xl mx-auto mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-secondary via-accent to-primary bg-clip-text text-transparent">
-              Office Space Solutions
-            </h2>
-            <p className="text-lg text-muted-foreground">
-              From fully furnished move-in ready offices to customizable white box spaces - find the perfect solution for your team.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {officeSpaces.map((office) => (
-              <StandardCard key={office.id} className="overflow-hidden group">
-                <div className="relative h-48 overflow-hidden">
-                  <img 
-                    src={office.image} 
-                    alt={office.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <Badge className={`absolute top-3 right-3 backdrop-blur ${
-                    office.type === "Fully Furnished" 
-                      ? "bg-primary/90" 
-                      : "bg-secondary/90"
-                  }`}>
-                    {office.type}
-                  </Badge>
-                </div>
-                
-                <CardHeader>
-                  <CardTitle className="text-xl flex items-center gap-2">
-                    <Building2 className="w-5 h-5 text-primary" />
-                    {office.name}
-                  </CardTitle>
-                  <CardDescription className="flex items-center gap-1">
-                    <MapPin className="w-4 h-4" />
-                    {office.location}
-                  </CardDescription>
-                </CardHeader>
-                
-                <CardContent>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    {office.description}
-                  </p>
-                  
-                  <div className="mb-4">
-                    <div className="flex items-center gap-2 mb-2 text-sm">
-                      <Briefcase className="w-4 h-4 text-primary" />
-                      <span className="font-semibold">Available Units:</span>
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                      {office.availableUnits.map((unit, index) => (
-                        <Badge key={index} variant="outline" className="text-xs">
-                          {unit}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {office.features.slice(0, 3).map((feature, index) => (
-                      <Badge key={index} variant="secondary" className="text-xs">
-                        {feature}
-                      </Badge>
-                    ))}
-                    {office.features.length > 3 && (
-                      <Badge variant="secondary" className="text-xs">
-                        +{office.features.length - 3} more
-                      </Badge>
-                    )}
-                  </div>
-
-                  <div className="mb-4 p-3 bg-primary/5 rounded-lg">
-                    <p className="text-sm font-semibold text-center">
-                      {office.priceRange}
-                    </p>
-                  </div>
-
-                  <Button variant="premium" className="w-full">
-                    Request Quote
-                  </Button>
-                </CardContent>
-              </StandardCard>
-            ))}
-          </div>
         </div>
 
         {/* CTA Section */}

@@ -11,6 +11,7 @@ import PartnerVerification from "./pages/PartnerVerification";
 import AdminDashboard from "./pages/AdminDashboard";
 import Billing from "./pages/Billing";
 import CoworkingSpaces from "./pages/CoworkingSpaces";
+import OfficeSpaces from "./pages/OfficeSpaces";
 import PartnerList from "./pages/PartnerList";
 import DirectoryWithMap from "./pages/DirectoryWithMap";
 import ExclusivePerks from "./pages/ExclusivePerks";
@@ -40,6 +41,7 @@ const App = () => (
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/billing" element={<Billing />} />
           <Route path="/spaces" element={<CoworkingSpaces />} />
+          <Route path="/office-spaces" element={<OfficeSpaces />} />
           <Route path="/partners" element={<PartnerList />} />
           <Route path="/directory" element={<DirectoryWithMap />} />
           <Route path="/perks" element={<ExclusivePerks />} />
