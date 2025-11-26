@@ -3,37 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Sparkles, MapPin, Gift, Shield, Zap, Globe, Crown, Building2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { useState } from "react";
-import { useToast } from "@/hooks/use-toast";
 import tdpkLogo from "@/assets/tdpk-logo.png";
 import tdpkBuilding from "@/assets/tdpk-building.png";
 import Footer from "@/components/Footer";
 
 const Index = () => {
-  const [seeding, setSeeding] = useState(false);
-  const { toast } = useToast();
-
-  const handleSeedDemoData = async () => {
-    setSeeding(true);
-    try {
-      const { error } = await supabase.functions.invoke('seed-demo-data');
-      
-      if (error) throw error;
-      
-      toast({
-        title: "Demo Data Created",
-        description: "Demo users and data have been seeded successfully. You can now log in with demo credentials.",
-      });
-    } catch (error: any) {
-      toast({
-        title: "Seeding Error",
-        description: error.message,
-        variant: "destructive",
-      });
-    } finally {
-      setSeeding(false);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-muted/30 to-background">
@@ -53,21 +27,12 @@ const Index = () => {
           <Button asChild size="lg" variant="hero" className="min-w-[200px]">
             <Link to="/auth">Get Started</Link>
           </Button>
-          <Button 
-            onClick={handleSeedDemoData} 
-            disabled={seeding}
-            size="lg" 
-            variant="outline" 
-            className="min-w-[200px]"
-          >
-            {seeding ? "Seeding..." : "Setup Demo Data"}
-          </Button>
         </div>
       </section>
 
       {/* Features Grid */}
       <section className="container mx-auto px-4 py-16">
-        <h2 className="text-3xl font-bold mb-8 text-center">Explore Our Ecosystem</h2>
+        <h2 className="text-3xl font-bold mb-8 text-center">Explore Our Ecosystem & Services</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           
           {/* 1. Partner Directory - Start with ecosystem overview */}
