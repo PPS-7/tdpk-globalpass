@@ -1,7 +1,11 @@
-import { MapPin, Users, Wifi, Coffee, Calendar } from "lucide-react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { MapPin, Users, Wifi, Coffee, Calendar, Search } from "lucide-react";
+import { StandardCard } from "@/components/ui/standard-card";
+import { CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useState } from "react";
 
 interface CoworkingSpace {
   id: string;
@@ -78,6 +82,18 @@ const coworkingSpaces: CoworkingSpace[] = [
 ];
 
 const CoworkingSpaces = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [countryFilter, setCountryFilter] = useState("all");
+  const [amenityFilter, setAmenityFilter] = useState("all");
+
+  const filteredSpaces = coworkingSpaces.filter(space => {
+    const matchesSearch = space.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         space.location.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCountry = countryFilter === "all" || space.region === countryFilter;
+    const matchesAmenity = amenityFilter === "all" || space.amenities.includes(amenityFilter);
+    return matchesSearch && matchesCountry && matchesAmenity;
+  });
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
       {/* Header */}
@@ -105,35 +121,87 @@ const CoworkingSpaces = () => {
           </p>
         </div>
 
+        {/* Filters */}
+        <div className="max-w-5xl mx-auto mb-8">
+          <StandardCard>
+            <CardContent className="pt-6 w-full">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div className="md:col-span-2">
+                  <div className="relative">
+                    <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      placeholder="Search spaces by name or location..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="pl-9"
+                    />
+                  </div>
+                </div>
+                <Select value={countryFilter} onValueChange={setCountryFilter}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Country" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Countries</SelectItem>
+                    <SelectItem value="Thailand">Thailand</SelectItem>
+                    <SelectItem value="Japan">Japan</SelectItem>
+                    <SelectItem value="Taiwan">Taiwan</SelectItem>
+                    <SelectItem value="Singapore">Singapore</SelectItem>
+                    <SelectItem value="Philippines">Philippines</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Select value={amenityFilter} onValueChange={setAmenityFilter}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Amenities" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Amenities</SelectItem>
+                    <SelectItem value="High-Speed WiFi">High-Speed WiFi</SelectItem>
+                    <SelectItem value="Meeting Rooms">Meeting Rooms</SelectItem>
+                    <SelectItem value="Event Space">Event Space</SelectItem>
+                    <SelectItem value="Cafe">Cafe</SelectItem>
+                    <SelectItem value="24/7 Access">24/7 Access</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </CardContent>
+          </StandardCard>
+        </div>
+
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 max-w-4xl mx-auto">
-          <Card className="text-center border-primary/20 bg-card/50 backdrop-blur">
+          <StandardCard className="text-center bg-card/50 backdrop-blur">
             <CardContent className="pt-6">
               <MapPin className="w-8 h-8 mx-auto mb-2 text-primary" />
               <div className="text-3xl font-bold text-foreground mb-1">6</div>
               <div className="text-sm text-muted-foreground">Locations</div>
             </CardContent>
-          </Card>
-          <Card className="text-center border-primary/20 bg-card/50 backdrop-blur">
+          </StandardCard>
+          <StandardCard className="text-center bg-card/50 backdrop-blur">
             <CardContent className="pt-6">
               <Users className="w-8 h-8 mx-auto mb-2 text-primary" />
               <div className="text-3xl font-bold text-foreground mb-1">4,060+</div>
               <div className="text-sm text-muted-foreground">Active Members</div>
             </CardContent>
-          </Card>
-          <Card className="text-center border-primary/20 bg-card/50 backdrop-blur">
+          </StandardCard>
+          <StandardCard className="text-center bg-card/50 backdrop-blur">
             <CardContent className="pt-6">
               <Calendar className="w-8 h-8 mx-auto mb-2 text-primary" />
               <div className="text-3xl font-bold text-foreground mb-1">24/7</div>
               <div className="text-sm text-muted-foreground">Access</div>
             </CardContent>
-          </Card>
+          </StandardCard>
         </div>
 
         {/* Spaces Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {coworkingSpaces.map((space) => (
-            <Card key={space.id} className="overflow-hidden hover:shadow-lg transition-all duration-300 border-primary/10 group">
+          {filteredSpaces.length === 0 ? (
+            <div className="col-span-full text-center py-12">
+              <p className="text-muted-foreground">No coworking spaces found matching your filters.</p>
+            </div>
+          ) : (
+            filteredSpaces.map((space) => (
+              <StandardCard key={space.id} className="overflow-hidden group">
               <div className="relative h-48 overflow-hidden">
                 <img 
                   src={space.image} 
@@ -182,14 +250,18 @@ const CoworkingSpaces = () => {
                 <Button variant="hero" className="w-full">
                   View Details
                 </Button>
+                <Badge variant="outline" className="w-full justify-center mt-2">
+                  Perks Coming Soon
+                </Badge>
               </CardContent>
-            </Card>
-          ))}
+              </StandardCard>
+            ))
+          )}
         </div>
 
         {/* CTA Section */}
         <div className="mt-16 text-center">
-          <Card className="max-w-2xl mx-auto border-primary/20 bg-gradient-to-br from-primary/5 to-secondary/5">
+          <StandardCard className="max-w-2xl mx-auto bg-gradient-to-br from-primary/5 to-secondary/5">
             <CardContent className="pt-8 pb-8">
               <h3 className="text-2xl font-bold mb-4">Join Our Network Today</h3>
               <p className="text-muted-foreground mb-6">
@@ -204,7 +276,7 @@ const CoworkingSpaces = () => {
                 </Button>
               </div>
             </CardContent>
-          </Card>
+          </StandardCard>
         </div>
       </section>
     </div>

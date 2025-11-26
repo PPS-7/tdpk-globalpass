@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { StandardCard } from "@/components/ui/standard-card";
+import { CardContent, CardHeader, CardTitle, CardDescription, Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Shield, Calendar, Briefcase, Coffee, Percent, Users, Building } from "lucide-react";
+import { ArrowLeft, Shield, Calendar, Briefcase, Percent, Users, Building } from "lucide-react";
 
 const TenantPrivilege = () => {
   const privilegeCategories = [
@@ -202,10 +203,13 @@ const TenantPrivilege = () => {
 
         {/* Featured Events */}
         <div className="mb-16">
-          <h2 className="text-3xl font-bold mb-6 text-center">Upcoming Tenant-Exclusive Events</h2>
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-3xl font-bold">Upcoming Tenant-Exclusive Events</h2>
+            <Badge variant="secondary">Event Calendar — Coming Soon</Badge>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {featuredEvents.map((event, idx) => (
-              <Card key={idx} className="border-primary/10 hover:shadow-xl transition-all">
+              <StandardCard key={idx}>
                 <CardHeader>
                   <Badge className="w-fit mb-2">{event.type}</Badge>
                   <CardTitle className="text-lg">{event.title}</CardTitle>
@@ -214,14 +218,17 @@ const TenantPrivilege = () => {
                     {event.date}
                   </CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="flex-1">
                   <div className="p-3 rounded-lg bg-primary/5 border border-primary/20">
                     <p className="text-sm font-medium text-primary">{event.tenantBenefit}</p>
                   </div>
                   <Button className="w-full mt-4" variant="outline">Register Now</Button>
                 </CardContent>
-              </Card>
+              </StandardCard>
             ))}
+          </div>
+          <div className="mt-8 text-center">
+            <p className="text-muted-foreground mb-4">More events added monthly. Full calendar launching soon.</p>
           </div>
         </div>
 

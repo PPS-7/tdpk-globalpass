@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Sparkles, MapPin, Gift, Shield, Zap, Globe } from "lucide-react";
+import { Sparkles, MapPin, Gift, Shield, Zap, Globe, Crown } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
@@ -104,6 +104,24 @@ const Index = () => {
             </Card>
           </Link>
 
+          <Link to="/international-services">
+            <Card className="border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30">
+              <CardContent className="pt-6">
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-primary/10 rounded-lg">
+                    <Globe className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold mb-2">International Services & Tours</h3>
+                    <p className="text-sm text-muted-foreground">
+                      Ecosystem tours, immersive programs, visa & landing services
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+
           <Link to="/perks">
             <Card className="border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30">
               <CardContent className="pt-6">
@@ -169,6 +187,24 @@ const Index = () => {
                     <h3 className="font-semibold mb-2">Digital Pass</h3>
                     <p className="text-sm text-muted-foreground">
                       Your membership in your pocket, always accessible
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+
+          <Link to="/membership">
+            <Card className="border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30">
+              <CardContent className="pt-6">
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-secondary/10 rounded-lg">
+                    <Crown className="h-6 w-6 text-secondary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold mb-2">Membership Plans</h3>
+                    <p className="text-sm text-muted-foreground">
+                      Explore our membership tiers and exclusive benefits
                     </p>
                   </div>
                 </div>

@@ -1,10 +1,21 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { StandardCard } from "@/components/ui/standard-card";
+import { CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Gift, Coffee, Utensils, Dumbbell, Briefcase, Calendar } from "lucide-react";
+import { ArrowLeft, Gift, Briefcase, Calendar, Lock } from "lucide-react";
+import { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 const ExclusivePerks = () => {
+  const [showPremiumModal, setShowPremiumModal] = useState(false);
+
   const perkCategories = [
     {
       title: "TDPK Monthly Coworking Members",
@@ -84,7 +95,7 @@ const ExclusivePerks = () => {
           {perkCategories.map((category, idx) => {
             const Icon = category.icon;
             return (
-              <Card key={idx} className="border-primary/10 hover:shadow-xl transition-all">
+              <StandardCard key={idx} className="hover:shadow-xl transition-all">
                 <CardHeader>
                   <div className="flex items-center gap-3 mb-2">
                     <div className={`p-2 rounded-lg ${category.color}`}>
@@ -93,7 +104,7 @@ const ExclusivePerks = () => {
                     <CardTitle>{category.title}</CardTitle>
                   </div>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="flex-1">
                   <div className="grid md:grid-cols-2 gap-4">
                     {category.perks.map((perk, perkIdx) => (
                       <div key={perkIdx} className="flex items-start gap-3 p-4 rounded-lg bg-muted/50">
@@ -106,34 +117,50 @@ const ExclusivePerks = () => {
                     ))}
                   </div>
                 </CardContent>
-              </Card>
+              </StandardCard>
             );
           })}
         </div>
 
-        {/* Featured Offers */}
+        {/* Featured Offers - With Premium Lock */}
         <div className="mb-16">
           <h2 className="text-3xl font-bold mb-6 text-center">Featured Offers This Month</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {featuredOffers.map((offer, idx) => (
-              <Card key={idx} className="border-primary/10 hover:shadow-xl transition-all">
+              <StandardCard key={idx} className="relative">
+                {/* Blur overlay for premium features */}
+                <div className="absolute inset-0 bg-background/60 backdrop-blur-sm rounded-xl z-10 flex items-center justify-center">
+                  <div className="text-center p-4">
+                    <Lock className="h-8 w-8 mx-auto mb-2 text-primary" />
+                    <p className="font-semibold mb-2">Premium Feature</p>
+                    <p className="text-sm text-muted-foreground mb-4">Coming Soon</p>
+                    <Button 
+                      size="sm" 
+                      variant="premium"
+                      onClick={() => setShowPremiumModal(true)}
+                    >
+                      See Membership Benefits
+                    </Button>
+                  </div>
+                </div>
+                
                 <CardHeader>
                   <Badge className="w-fit mb-2">{offer.category}</Badge>
                   <CardTitle className="text-lg">{offer.partner}</CardTitle>
-                  <CardDescription>{offer.offer}</CardDescription>
+                  <CardDescription className="blur-sm">{offer.offer}</CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground">Valid until: {offer.validUntil}</p>
-                  <Button className="w-full mt-4" variant="outline">View Details</Button>
+                <CardContent className="flex-1">
+                  <p className="text-sm text-muted-foreground blur-sm">Valid until: {offer.validUntil}</p>
+                  <Button className="w-full mt-4" variant="outline" disabled>View Details</Button>
                 </CardContent>
-              </Card>
+              </StandardCard>
             ))}
           </div>
         </div>
 
         {/* CTA */}
-        <Card className="bg-gradient-to-r from-primary/10 to-secondary/10 border-primary/20">
-          <CardContent className="py-12 text-center">
+        <StandardCard className="bg-gradient-to-r from-primary/10 to-secondary/10">
+          <CardContent className="py-12 text-center w-full">
             <h2 className="text-3xl font-bold mb-4">Ready to Unlock These Perks?</h2>
             <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
               Join TDPK today and start enjoying exclusive benefits across our partner network
@@ -142,8 +169,34 @@ const ExclusivePerks = () => {
               <Link to="/auth">Get Started</Link>
             </Button>
           </CardContent>
-        </Card>
+        </StandardCard>
       </section>
+
+      {/* Premium Feature Modal */}
+      <Dialog open={showPremiumModal} onOpenChange={setShowPremiumModal}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Premium Feature — Coming Soon</DialogTitle>
+            <DialogDescription>
+              Unlock exclusive discounts, promo codes, and direct booking links with our Premium membership launching soon.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <h4 className="font-semibold">Premium Members Get:</h4>
+              <ul className="text-sm text-muted-foreground space-y-1">
+                <li>• Up to 30% off at 100+ partner locations</li>
+                <li>• Exclusive promo codes and vouchers</li>
+                <li>• Priority booking for events and offers</li>
+                <li>• Early access to new partnerships</li>
+              </ul>
+            </div>
+            <Button asChild variant="premium" className="w-full">
+              <Link to="/membership">View Membership Plans</Link>
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
