@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Sparkles, MapPin, Gift, Shield, Zap, Globe, Crown } from "lucide-react";
+import { Sparkles, MapPin, Gift, Shield, Zap, Globe, Crown, Building2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
@@ -100,7 +100,26 @@ const Index = () => {
                   <div>
                     <h3 className="font-semibold mb-2">Global Coworking Spaces</h3>
                     <p className="text-sm text-muted-foreground">
-                      Access premium coworking spaces across 6 locations in Asia
+                      Access premium coworking spaces across 13 locations in Asia
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+
+          {/* 2.5. Office Space Solutions - Show office options */}
+          <Link to="/office-spaces">
+            <Card className="border-secondary/10 hover:shadow-xl transition-all cursor-pointer hover:border-secondary/30">
+              <CardContent className="pt-6">
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-secondary/10 rounded-lg">
+                    <Building2 className="h-6 w-6 text-secondary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold mb-2">Office Space Solutions</h3>
+                    <p className="text-sm text-muted-foreground">
+                      Fully furnished or customizable office spaces for your team
                     </p>
                   </div>
                 </div>
