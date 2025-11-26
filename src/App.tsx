@@ -17,6 +17,8 @@ import ExclusivePerks from "./pages/ExclusivePerks";
 import InstantVerification from "./pages/InstantVerification";
 import TenantPrivilege from "./pages/TenantPrivilege";
 import DigitalPass from "./pages/DigitalPass";
+import InternationalServices from "./pages/InternationalServices";
+import Membership from "./pages/Membership";
 import TermsOfService from "./pages/TermsOfService";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import NotFound from "./pages/NotFound";
@@ -44,6 +46,8 @@ const App = () => (
           <Route path="/verification" element={<InstantVerification />} />
           <Route path="/tenant-privilege" element={<TenantPrivilege />} />
           <Route path="/digital-pass" element={<DigitalPass />} />
+          <Route path="/international-services" element={<InternationalServices />} />
+          <Route path="/membership" element={<Membership />} />
           <Route path="/terms" element={<TermsOfService />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="*" element={<NotFound />} />
