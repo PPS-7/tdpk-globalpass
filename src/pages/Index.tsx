@@ -72,16 +72,16 @@ const Index = () => {
           
           {/* 1. Partner Directory - Start with ecosystem overview */}
           <Link to="/partners">
-            <Card className="h-full border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30">
+            <Card className="border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30">
               <CardContent className="pt-6">
-                <div className="flex flex-col gap-4">
-                  <div className="p-3 bg-secondary/10 rounded-lg w-fit">
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-secondary/10 rounded-lg">
                     <Globe className="h-6 w-6 text-secondary" />
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-2 text-lg">Ecosystem Partner Directory</h3>
+                    <h3 className="font-semibold mb-2">Ecosystem Partner Directory</h3>
                     <p className="text-sm text-muted-foreground">
-                      Discover 100+ partners including investors, corporates, and service providers across Asia
+                      Discover 100+ partners including investors, corporates, and service providers
                     </p>
                   </div>
                 </div>
@@ -91,16 +91,16 @@ const Index = () => {
 
           {/* 2. Coworking Spaces - Next, show workspace options */}
           <Link to="/spaces">
-            <Card className="h-full border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30">
+            <Card className="border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30">
               <CardContent className="pt-6">
-                <div className="flex flex-col gap-4">
-                  <div className="p-3 bg-primary/10 rounded-lg w-fit">
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-primary/10 rounded-lg">
                     <MapPin className="h-6 w-6 text-primary" />
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-2 text-lg">Global Coworking Spaces</h3>
+                    <h3 className="font-semibold mb-2">Global Coworking Spaces</h3>
                     <p className="text-sm text-muted-foreground">
-                      Access premium coworking spaces across 6 locations in Southeast Asia
+                      Access premium coworking spaces across 6 locations in Asia
                     </p>
                   </div>
                 </div>
@@ -110,16 +110,16 @@ const Index = () => {
 
           {/* 3. Membership Plans - Then show membership options */}
           <Link to="/membership">
-            <Card className="h-full border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30">
+            <Card className="border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30">
               <CardContent className="pt-6">
-                <div className="flex flex-col gap-4">
-                  <div className="p-3 bg-secondary/10 rounded-lg w-fit">
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-secondary/10 rounded-lg">
                     <Crown className="h-6 w-6 text-secondary" />
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-2 text-lg">Membership Plans</h3>
+                    <h3 className="font-semibold mb-2">Membership Plans</h3>
                     <p className="text-sm text-muted-foreground">
-                      Choose from free to premium tiers with exclusive benefits and perks
+                      Choose from free to premium tiers with exclusive benefits
                     </p>
                   </div>
                 </div>
@@ -129,16 +129,16 @@ const Index = () => {
 
           {/* 4. Exclusive Perks - Show benefits */}
           <Link to="/perks">
-            <Card className="h-full border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30">
+            <Card className="border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30">
               <CardContent className="pt-6">
-                <div className="flex flex-col gap-4">
-                  <div className="p-3 bg-secondary/10 rounded-lg w-fit">
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-secondary/10 rounded-lg">
                     <Gift className="h-6 w-6 text-secondary" />
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-2 text-lg">Exclusive Perks & Offers</h3>
+                    <h3 className="font-semibold mb-2">Exclusive Perks & Offers</h3>
                     <p className="text-sm text-muted-foreground">
-                      Unlock special discounts at 100+ partner locations network-wide
+                      Unlock special discounts at 100+ partner locations
                     </p>
                   </div>
                 </div>
@@ -148,16 +148,16 @@ const Index = () => {
 
           {/* 5. International Services - For expansion */}
           <Link to="/international-services">
-            <Card className="h-full border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30">
+            <Card className="border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30">
               <CardContent className="pt-6">
-                <div className="flex flex-col gap-4">
-                  <div className="p-3 bg-primary/10 rounded-lg w-fit">
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-primary/10 rounded-lg">
                     <Globe className="h-6 w-6 text-primary" />
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-2 text-lg">International Services</h3>
+                    <h3 className="font-semibold mb-2">International Services</h3>
                     <p className="text-sm text-muted-foreground">
-                      Visa support, market entry assistance, and ecosystem tours for global expansion
+                      Visa support, market entry, and ecosystem tours
                     </p>
                   </div>
                 </div>
@@ -167,16 +167,16 @@ const Index = () => {
 
           {/* 6. Tenant Privilege - For office tenants */}
           <Link to="/tenant-privilege">
-            <Card className="h-full border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30">
+            <Card className="border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30">
               <CardContent className="pt-6">
-                <div className="flex flex-col gap-4">
-                  <div className="p-3 bg-secondary/10 rounded-lg w-fit">
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-secondary/10 rounded-lg">
                     <Shield className="h-6 w-6 text-secondary" />
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-2 text-lg">Tenant Privilege Program</h3>
+                    <h3 className="font-semibold mb-2">Tenant Privilege Program</h3>
                     <p className="text-sm text-muted-foreground">
-                      Premium benefits and VIP access for TDPK office space tenants
+                      Premium benefits for TDPK office space tenants
                     </p>
                   </div>
                 </div>
@@ -186,16 +186,16 @@ const Index = () => {
 
           {/* 7. Instant Verification - Utility feature */}
           <Link to="/verification">
-            <Card className="h-full border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30">
+            <Card className="border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30">
               <CardContent className="pt-6">
-                <div className="flex flex-col gap-4">
-                  <div className="p-3 bg-primary/10 rounded-lg w-fit">
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-primary/10 rounded-lg">
                     <Zap className="h-6 w-6 text-primary" />
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-2 text-lg">Instant Verification</h3>
+                    <h3 className="font-semibold mb-2">Instant Verification</h3>
                     <p className="text-sm text-muted-foreground">
-                      Quick QR code scanning for seamless check-ins at partner locations
+                      Quick QR code scanning for seamless check-ins
                     </p>
                   </div>
                 </div>
@@ -205,16 +205,16 @@ const Index = () => {
 
           {/* 8. Digital Pass - Utility feature */}
           <Link to="/digital-pass">
-            <Card className="h-full border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30">
+            <Card className="border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30">
               <CardContent className="pt-6">
-                <div className="flex flex-col gap-4">
-                  <div className="p-3 bg-primary/10 rounded-lg w-fit">
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-primary/10 rounded-lg">
                     <Sparkles className="h-6 w-6 text-primary" />
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-2 text-lg">Digital Pass</h3>
+                    <h3 className="font-semibold mb-2">Digital Pass</h3>
                     <p className="text-sm text-muted-foreground">
-                      Your mobile membership card with instant access to all benefits
+                      Your mobile membership card with instant access
                     </p>
                   </div>
                 </div>
