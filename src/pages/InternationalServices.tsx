@@ -138,89 +138,118 @@ const InternationalServices = () => {
             </CardContent>
           </StandardCard>
 
-          {/* Landing Programs */}
+          {/* Market Exploration */}
           <StandardCard>
             <CardHeader>
               <div className="flex items-center justify-between mb-2">
                 <Plane className="h-8 w-8 text-secondary" />
                 <Badge>Available</Badge>
               </div>
-              <CardTitle className="text-xl">Landing Programs</CardTitle>
-              <CardDescription>Soft Landing Support</CardDescription>
+              <CardTitle className="text-xl">Market Exploration</CardTitle>
+              <CardDescription>For Those Still Deciding</CardDescription>
             </CardHeader>
             <CardContent className="flex-1">
               <p className="text-sm text-muted-foreground mb-4">
-                End-to-end support for startups and businesses establishing operations in Thailand.
+                Not sure about expanding to Thailand yet? We help you explore and assess the market before making commitments.
               </p>
               <div className="space-y-2 mb-4">
-                <h4 className="font-semibold text-sm">What's Included:</h4>
+                <h4 className="font-semibold text-sm">What&apos;s Included:</h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
-                  <li>• Company registration assistance</li>
-                  <li>• Banking setup support</li>
-                  <li>• Office space consultation</li>
-                  <li>• Local partner introductions</li>
+                  <li>• Market feasibility assessment</li>
+                  <li>• Industry landscape overview</li>
+                  <li>• Competitor analysis</li>
+                  <li>• Cost-benefit evaluation</li>
                 </ul>
               </div>
               <Button variant="premium" className="w-full">
-                Start Landing
+                Start Exploring
               </Button>
             </CardContent>
           </StandardCard>
 
-          {/* Market Entry Support */}
+          {/* Market Entry */}
+          <StandardCard>
+            <CardHeader>
+              <div className="flex items-center justify-between mb-2">
+                <Building2 className="h-8 w-8 text-primary" />
+                <Badge>Available</Badge>
+              </div>
+              <CardTitle className="text-xl">Market Entry</CardTitle>
+              <CardDescription>Ready to Expand</CardDescription>
+            </CardHeader>
+            <CardContent className="flex-1">
+              <p className="text-sm text-muted-foreground mb-4">
+                Ready to establish your business in Thailand? End-to-end support for company registration and operations setup.
+              </p>
+              <div className="space-y-2 mb-4">
+                <h4 className="font-semibold text-sm">What&apos;s Included:</h4>
+                <ul className="text-sm text-muted-foreground space-y-1">
+                  <li>• Company registration assistance</li>
+                  <li>• Banking setup support</li>
+                  <li>• Office space consultation</li>
+                  <li>• Legal & compliance guidance</li>
+                </ul>
+              </div>
+              <Button variant="premium" className="w-full">
+                Start Registration
+              </Button>
+            </CardContent>
+          </StandardCard>
+
+          {/* Business Matching */}
           <StandardCard>
             <CardHeader>
               <div className="flex items-center justify-between mb-2">
                 <HandshakeIcon className="h-8 w-8 text-primary" />
                 <Badge>Available</Badge>
               </div>
-              <CardTitle className="text-xl">Market Entry Support</CardTitle>
-              <CardDescription>Business Expansion</CardDescription>
+              <CardTitle className="text-xl">Business Matching</CardTitle>
+              <CardDescription>Strategic Partnerships</CardDescription>
             </CardHeader>
             <CardContent className="flex-1">
               <p className="text-sm text-muted-foreground mb-4">
-                Strategic guidance and connections to accelerate your market entry into Southeast Asia.
+                Connect with strategic partners to accelerate your growth in Southeast Asia.
               </p>
               <div className="space-y-2 mb-4">
                 <h4 className="font-semibold text-sm">Services:</h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
-                  <li>• Market research & insights</li>
                   <li>• Partner matchmaking</li>
                   <li>• Customer introductions</li>
+                  <li>• Investor connections</li>
                   <li>• Go-to-market strategy</li>
                 </ul>
               </div>
               <Button variant="premium" className="w-full">
-                Explore Options
+                Find Partners
               </Button>
             </CardContent>
           </StandardCard>
 
-          {/* Government Connections */}
+          {/* Local Partners */}
           <StandardCard>
             <CardHeader>
               <div className="flex items-center justify-between mb-2">
-                <Landmark className="h-8 w-8 text-secondary" />
+                <Users className="h-8 w-8 text-secondary" />
                 <Badge>Available</Badge>
               </div>
-              <CardTitle className="text-xl">Government Connections</CardTitle>
-              <CardDescription>Official Support</CardDescription>
+              <CardTitle className="text-xl">Local Partners</CardTitle>
+              <CardDescription>Find Your Match</CardDescription>
             </CardHeader>
             <CardContent className="flex-1">
               <p className="text-sm text-muted-foreground mb-4">
-                Direct connections to key government agencies supporting digital economy and foreign investment.
+                Connect with trusted local partners including service providers, distributors, and ecosystem players.
               </p>
               <div className="space-y-2 mb-4">
-                <h4 className="font-semibold text-sm">Agency Partners:</h4>
+                <h4 className="font-semibold text-sm">Partner Types:</h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
-                  <li>• BOI (Board of Investment)</li>
-                  <li>• DEPA (Digital Economy Promotion)</li>
-                  <li>• NSTDA (Science & Technology)</li>
-                  <li>• Startup Thailand</li>
+                  <li>• Legal & accounting firms</li>
+                  <li>• Marketing & PR agencies</li>
+                  <li>• Technology service providers</li>
+                  <li>• Distribution partners</li>
                 </ul>
               </div>
               <Button variant="premium" className="w-full">
-                Connect Now
+                Browse Partners
               </Button>
             </CardContent>
           </StandardCard>
