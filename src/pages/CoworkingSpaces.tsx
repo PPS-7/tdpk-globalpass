@@ -43,13 +43,73 @@ const coworkingSpaces: CoworkingSpace[] = [
   },
   {
     id: "1a",
-    name: "True Space",
-    location: "Bangkok, Thailand",
+    name: "True Space Siam Square Soi 2",
+    location: "Siam Square Soi 2, Bangkok",
     region: "Thailand",
-    description: "Premium flexible workspace solution offering hot desks and dedicated seating in a vibrant community environment.",
-    amenities: ["High-Speed WiFi", "Hot Desks", "Dedicated Desks", "Lounge Area", "Coffee Bar", "Community Events"],
-    members: 350,
+    description: "Premium flexible workspace in the heart of Bangkok's shopping district. Perfect blend of work and lifestyle convenience.",
+    amenities: ["High-Speed WiFi", "Hot Desks", "Dedicated Desks", "Meeting Rooms", "Coffee Bar", "Community Events"],
+    members: 85,
     image: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=800&auto=format&fit=crop"
+  },
+  {
+    id: "1b",
+    name: "True Space Siam Square Soi 3",
+    location: "Siam Square Soi 3, Bangkok",
+    region: "Thailand",
+    description: "Modern coworking space with vibrant atmosphere, located in Bangkok's creative hub with easy access to BTS Siam.",
+    amenities: ["High-Speed WiFi", "Hot Desks", "Private Offices", "Phone Booths", "Cafe", "Rooftop Terrace"],
+    members: 92,
+    image: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=800&auto=format&fit=crop"
+  },
+  {
+    id: "1c",
+    name: "True Space ICONSIAM",
+    location: "ICONSIAM 4th Floor, Bangkok",
+    region: "Thailand",
+    description: "Prestigious workspace overlooking the Chao Phraya River. Premium location for businesses seeking an impressive address.",
+    amenities: ["High-Speed WiFi", "River View", "Premium Lounges", "Meeting Rooms", "Fine Dining Access", "Concierge Service"],
+    members: 68,
+    image: "https://images.unsplash.com/photo-1497366858526-0766cadbe8fa?w=800&auto=format&fit=crop"
+  },
+  {
+    id: "1d",
+    name: "True Space Asoke",
+    location: "Asoke, Bangkok",
+    region: "Thailand",
+    description: "Strategic location in Bangkok's business district with excellent connectivity to BTS and MRT. Ideal for professionals and startups.",
+    amenities: ["High-Speed WiFi", "Hot Desks", "Meeting Rooms", "Printing Services", "Kitchen", "Networking Events"],
+    members: 110,
+    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&auto=format&fit=crop"
+  },
+  {
+    id: "1e",
+    name: "True Space Rangsit University",
+    location: "Rangsit University, Pathum Thani",
+    region: "Thailand",
+    description: "Innovation hub fostering student entrepreneurship and university-industry collaboration. Perfect for academic startups.",
+    amenities: ["High-Speed WiFi", "Study Rooms", "Collaboration Space", "Mentorship Programs", "Student Discount", "24/7 Access"],
+    members: 145,
+    image: "https://images.unsplash.com/photo-1497366412874-3415097a27e7?w=800&auto=format&fit=crop"
+  },
+  {
+    id: "1f",
+    name: "True Space Mahidol University",
+    location: "Mahidol University Salaya, Nakhon Pathom",
+    region: "Thailand",
+    description: "Academic coworking space supporting research commercialization and med-tech innovations at Thailand's premier medical university.",
+    amenities: ["High-Speed WiFi", "Research Labs Access", "Meeting Rooms", "Innovation Zone", "Faculty Mentors", "Library Access"],
+    members: 78,
+    image: "https://images.unsplash.com/photo-1497366672149-e5e4b4d34eb3?w=800&auto=format&fit=crop"
+  },
+  {
+    id: "1g",
+    name: "True Space Ubon Ratchathani",
+    location: "Y-Square Food Mall, Ubon Ratchathani",
+    region: "Thailand",
+    description: "Northeast Thailand's innovation hub, empowering local entrepreneurs and connecting regional businesses with national opportunities.",
+    amenities: ["High-Speed WiFi", "Hot Desks", "Meeting Rooms", "Local Community", "Regional Events", "Food Court Access"],
+    members: 58,
+    image: "https://images.unsplash.com/photo-1497366858526-0766cadbe8fa?w=800&auto=format&fit=crop"
   },
   {
     id: "2",
@@ -231,14 +291,14 @@ const CoworkingSpaces = () => {
           <StandardCard className="text-center bg-card/50 backdrop-blur">
             <CardContent className="pt-6">
               <MapPin className="w-8 h-8 mx-auto mb-2 text-primary" />
-              <div className="text-3xl font-bold text-foreground mb-1">7</div>
+              <div className="text-3xl font-bold text-foreground mb-1">13</div>
               <div className="text-sm text-muted-foreground">Locations</div>
             </CardContent>
           </StandardCard>
           <StandardCard className="text-center bg-card/50 backdrop-blur">
             <CardContent className="pt-6">
               <Users className="w-8 h-8 mx-auto mb-2 text-primary" />
-              <div className="text-3xl font-bold text-foreground mb-1">4,400+</div>
+              <div className="text-3xl font-bold text-foreground mb-1">4,800+</div>
               <div className="text-sm text-muted-foreground">Active Members</div>
             </CardContent>
           </StandardCard>
@@ -317,10 +377,25 @@ const CoworkingSpaces = () => {
           )}
         </div>
 
+        {/* Divider */}
+        <div className="my-20">
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-border"></div>
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="px-4 bg-background text-muted-foreground">
+                <Building2 className="inline w-5 h-5 mr-2" />
+                Office Solutions
+              </span>
+            </div>
+          </div>
+        </div>
+
         {/* Office Space Solutions Section */}
-        <div className="mt-20">
+        <div>
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-secondary via-primary to-primary-glow bg-clip-text text-transparent">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-secondary via-accent to-primary bg-clip-text text-transparent">
               Office Space Solutions
             </h2>
             <p className="text-lg text-muted-foreground">
