@@ -78,9 +78,7 @@ const Index = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold mb-2">Office Space Solutions</h3>
-                    <p className="text-sm text-muted-foreground">
-                      Fully furnished or customizable office spaces for your team
-                    </p>
+                    <p className="text-sm text-muted-foreground">Select office spaces for your team</p>
                   </div>
                 </div>
               </CardContent>
@@ -151,7 +149,7 @@ const Index = () => {
                     <Shield className="h-6 w-6 text-secondary" />
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-2">Tenant Privilege Program</h3>
+                    <h3 className="font-semibold mb-2">Tenant Privilege</h3>
                     <p className="text-sm text-muted-foreground">
                       Premium benefits for TDPK office space tenants
                     </p>
@@ -171,9 +169,7 @@ const Index = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold mb-2">Instant Verification</h3>
-                    <p className="text-sm text-muted-foreground">
-                      Quick QR code scanning for seamless check-ins
-                    </p>
+                    <p className="text-sm text-muted-foreground">Quick QR code scanning for seamless check-ins</p>
                   </div>
                 </div>
               </CardContent>
@@ -189,7 +185,7 @@ const Index = () => {
                     <Sparkles className="h-6 w-6 text-primary" />
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-2">Digital Pass</h3>
+                    <h3 className="font-semibold mb-2">Digital Member Pass</h3>
                     <p className="text-sm text-muted-foreground">
                       Your mobile membership card with instant access
                     </p>
