@@ -81,7 +81,7 @@ const Index = () => {
                   <div>
                     <h3 className="font-semibold mb-2">Ecosystem Partner Directory</h3>
                     <p className="text-sm text-muted-foreground">
-                      Discover 100+ partners including investors, corporates, and service providers
+                      Access 100+ partners across 5 categories in Asia
                     </p>
                   </div>
                 </div>
