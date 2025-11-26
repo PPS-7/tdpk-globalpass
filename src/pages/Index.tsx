@@ -6,11 +6,8 @@ import { supabase } from "@/integrations/supabase/client";
 import tdpkLogo from "@/assets/tdpk-logo.png";
 import tdpkBuilding from "@/assets/tdpk-building.png";
 import Footer from "@/components/Footer";
-
 const Index = () => {
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-muted/30 to-background">
+  return <div className="min-h-screen bg-gradient-to-br from-background via-muted/30 to-background">
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-20 text-center">
         <div className="flex items-center justify-center mb-6">
@@ -64,9 +61,7 @@ const Index = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold mb-2">Global Coworking Spaces</h3>
-                    <p className="text-sm text-muted-foreground">
-                      Access premium coworking spaces across 13 locations in Asia
-                    </p>
+                    <p className="text-sm text-muted-foreground">Access premium coworking spaces across Asia</p>
                   </div>
                 </div>
               </CardContent>
@@ -140,9 +135,7 @@ const Index = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold mb-2">International Services</h3>
-                    <p className="text-sm text-muted-foreground">
-                      Visa support, market entry, and ecosystem tours
-                    </p>
+                    <p className="text-sm text-muted-foreground">Visa services, Landing Programs, and Ecosystem tours</p>
                   </div>
                 </div>
               </CardContent>
@@ -230,8 +223,6 @@ const Index = () => {
       </section>
 
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
