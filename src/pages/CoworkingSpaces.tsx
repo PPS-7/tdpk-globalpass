@@ -213,21 +213,21 @@ const CoworkingSpaces = () => {
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 max-w-4xl mx-auto">
           <StandardCard className="text-center bg-card/50 backdrop-blur">
-            <CardContent className="pt-6">
+            <CardContent className="pt-6 py-[25px] px-[85px]">
               <MapPin className="w-8 h-8 mx-auto mb-2 text-primary" />
               <div className="text-3xl font-bold text-foreground mb-1">13</div>
               <div className="text-sm text-muted-foreground">Locations</div>
             </CardContent>
           </StandardCard>
           <StandardCard className="text-center bg-card/50 backdrop-blur">
-            <CardContent className="pt-6">
+            <CardContent className="pt-6 px-[64px]">
               <Users className="w-8 h-8 mx-auto mb-2 text-primary" />
               <div className="text-3xl font-bold text-foreground mb-1">4,800+</div>
               <div className="text-sm text-muted-foreground">Active Members</div>
             </CardContent>
           </StandardCard>
           <StandardCard className="text-center bg-card/50 backdrop-blur">
-            <CardContent className="pt-6">
+            <CardContent className="pt-6 px-[83px]">
               <Calendar className="w-8 h-8 mx-auto mb-2 text-primary" />
               <div className="text-3xl font-bold text-foreground mb-1">24/7</div>
               <div className="text-sm text-muted-foreground">Access</div>
