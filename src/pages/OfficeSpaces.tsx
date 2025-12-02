@@ -61,9 +61,7 @@ const OfficeSpaces = () => {
       <header className="border-b bg-background/80 backdrop-blur-sm sticky top-0 z-10">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent">
-              TDPK Network
-            </h1>
+            
             <Button variant="outline" onClick={() => window.location.href = "/"}>
               Back to Home
             </Button>
@@ -106,21 +104,21 @@ const OfficeSpaces = () => {
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 max-w-4xl mx-auto">
           <StandardCard className="text-center bg-card/50 backdrop-blur">
-            <CardContent className="pt-6">
+            <CardContent className="pt-6 px-[85px]">
               <Building2 className="w-8 h-8 mx-auto mb-2 text-secondary" />
               <div className="text-3xl font-bold text-foreground mb-1">3</div>
               <div className="text-sm text-muted-foreground">Locations</div>
             </CardContent>
           </StandardCard>
           <StandardCard className="text-center bg-card/50 backdrop-blur">
-            <CardContent className="pt-6">
+            <CardContent className="pt-6 px-[80px]">
               <Briefcase className="w-8 h-8 mx-auto mb-2 text-secondary" />
               <div className="text-3xl font-bold text-foreground mb-1">2</div>
               <div className="text-sm text-muted-foreground">Office Types</div>
             </CardContent>
           </StandardCard>
           <StandardCard className="text-center bg-card/50 backdrop-blur">
-            <CardContent className="pt-6">
+            <CardContent className="pt-6 px-[72px]">
               <MapPin className="w-8 h-8 mx-auto mb-2 text-secondary" />
               <div className="text-3xl font-bold text-foreground mb-1">100%</div>
               <div className="text-sm text-muted-foreground">Customizable</div>
