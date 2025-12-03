@@ -1,142 +1,134 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { StandardCard } from "@/components/ui/standard-card";
-import { CardContent, CardHeader, CardTitle, CardDescription, Card } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Shield, Calendar, Briefcase, Percent, Users, Building } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { ArrowLeft, Calendar, Clock, MapPin } from "lucide-react";
+
+interface Event {
+  id: string;
+  title: string;
+  thumbnail: string;
+  date: string;
+  time: string;
+  location: string;
+  description: string;
+  accessType: "tenant" | "free";
+  month: string;
+}
 
 const TenantPrivilege = () => {
-  const privilegeCategories = [
+  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+
+  const events: Event[] = [
+    // January 2026
     {
-      title: "Event Access & Networking",
-      icon: Calendar,
-      color: "bg-primary/10 text-primary",
-      benefits: [
-        {
-          name: "Priority Event Registration",
-          description: "Get first access to all TDPK-hosted events, conferences, and workshops",
-          value: "Exclusive"
-        },
-        {
-          name: "VIP Seating",
-          description: "Reserved seating at major events and networking sessions",
-          value: "Complimentary"
-        },
-        {
-          name: "Speaker Series",
-          description: "Access to monthly industry leader talks and panel discussions",
-          value: "Free Entry"
-        },
-        {
-          name: "Networking Lounges",
-          description: "Exclusive tenant-only networking spaces during events",
-          value: "Members Only"
-        }
-      ]
+      id: "1",
+      title: "Tech Innovation Summit 2026",
+      thumbnail: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400&h=300&fit=crop",
+      date: "January 15, 2026",
+      time: "09:00 - 18:00",
+      location: "TDPK Main Hall, 6th Floor",
+      description: "Join industry leaders and innovators for a day of insights into emerging technologies. Features keynote speeches, panel discussions, and networking opportunities with top tech executives from across Southeast Asia.",
+      accessType: "tenant",
+      month: "January 2026"
     },
     {
-      title: "Retail & F&B Discounts",
-      icon: Percent,
-      color: "bg-secondary/10 text-secondary",
-      benefits: [
-        {
-          name: "In-Building Restaurants",
-          description: "Special discounts at all TDPK food courts and restaurants",
-          value: "15-20% Off"
-        },
-        {
-          name: "Retail Shops",
-          description: "Year-round discounts at retail partners within TDPK",
-          value: "10-25% Off"
-        },
-        {
-          name: "Partner Brands",
-          description: "Exclusive offers from 100+ partnered brands nationwide",
-          value: "Up to 30% Off"
-        },
-        {
-          name: "Loyalty Program",
-          description: "Earn points with every purchase, redeem for rewards",
-          value: "5x Points"
-        }
-      ]
+      id: "2",
+      title: "Startup Pitch Night",
+      thumbnail: "https://images.unsplash.com/photo-1559223607-a43c990c692c?w=400&h=300&fit=crop",
+      date: "January 22, 2026",
+      time: "18:00 - 21:00",
+      location: "TDPK Event Space, 5th Floor",
+      description: "Watch promising startups pitch their ideas to a panel of investors. Great opportunity for networking and discovering the next big thing in Thai tech ecosystem.",
+      accessType: "free",
+      month: "January 2026"
+    },
+    // February 2026
+    {
+      id: "3",
+      title: "Digital Marketing Masterclass",
+      thumbnail: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop",
+      date: "February 5, 2026",
+      time: "13:00 - 17:00",
+      location: "TDPK Training Room A",
+      description: "Learn advanced digital marketing strategies from industry experts. Topics include SEO, social media marketing, content strategy, and analytics-driven decision making.",
+      accessType: "tenant",
+      month: "February 2026"
     },
     {
-      title: "Workspace & Meeting Credits",
-      icon: Briefcase,
-      color: "bg-accent/10 text-accent-foreground",
-      benefits: [
-        {
-          name: "Meeting Room Credits",
-          description: "Monthly credits for booking meeting rooms",
-          value: "20 hrs/month"
-        },
-        {
-          name: "TDPK Coworking Access",
-          description: "Unlimited access to TDPK coworking spaces",
-          value: "Included"
-        },
-        {
-          name: "True Space Network",
-          description: "Cross-network access to True Space locations",
-          value: "10 days/month"
-        },
-        {
-          name: "Private Office Upgrades",
-          description: "Priority booking for private offices and phone booths",
-          value: "Anytime"
-        }
-      ]
+      id: "4",
+      title: "Women in Tech Networking",
+      thumbnail: "https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=400&h=300&fit=crop",
+      date: "February 14, 2026",
+      time: "18:30 - 21:00",
+      location: "TDPK Rooftop Lounge",
+      description: "Celebrate and connect with women leaders in technology. An evening of inspiring talks, mentorship opportunities, and building meaningful professional connections.",
+      accessType: "free",
+      month: "February 2026"
     },
     {
-      title: "Additional Perks",
-      icon: Building,
-      color: "bg-primary/10 text-primary",
-      benefits: [
-        {
-          name: "Concierge Service",
-          description: "Dedicated tenant support for bookings and inquiries",
-          value: "24/7 Available"
-        },
-        {
-          name: "Parking Benefits",
-          description: "Discounted monthly parking rates at TDPK facilities",
-          value: "30% Off"
-        },
-        {
-          name: "Wellness Programs",
-          description: "Gym, yoga classes, and health check-ups",
-          value: "Subsidized"
-        },
-        {
-          name: "Business Services",
-          description: "Printing, courier, and administrative support",
-          value: "Discounted Rates"
-        }
-      ]
-    }
+      id: "5",
+      title: "AI & Machine Learning Workshop",
+      thumbnail: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&h=300&fit=crop",
+      date: "February 20, 2026",
+      time: "09:00 - 16:00",
+      location: "TDPK Innovation Lab",
+      description: "Hands-on workshop covering practical applications of AI and ML in business. Bring your laptop and learn to build your first AI models with guidance from experts.",
+      accessType: "tenant",
+      month: "February 2026"
+    },
+    // March 2026
+    {
+      id: "6",
+      title: "Fintech Forum Bangkok",
+      thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop",
+      date: "March 8, 2026",
+      time: "09:00 - 17:00",
+      location: "TDPK Main Hall, 6th Floor",
+      description: "Annual gathering of fintech leaders discussing the future of financial services in Thailand. Featuring regulatory updates, case studies, and partnership opportunities.",
+      accessType: "tenant",
+      month: "March 2026"
+    },
+    {
+      id: "7",
+      title: "Monthly Startup Mixer",
+      thumbnail: "https://images.unsplash.com/photo-1511578314322-379afb476865?w=400&h=300&fit=crop",
+      date: "March 12, 2026",
+      time: "18:00 - 21:00",
+      location: "TDPK Co-working Lounge",
+      description: "Our popular monthly networking event bringing together founders, investors, and tech enthusiasts. Enjoy drinks and appetizers while expanding your professional network.",
+      accessType: "free",
+      month: "March 2026"
+    },
+    {
+      id: "8",
+      title: "UX/UI Design Sprint",
+      thumbnail: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=300&fit=crop",
+      date: "March 25-26, 2026",
+      time: "09:00 - 18:00",
+      location: "TDPK Design Studio",
+      description: "Two-day intensive design sprint where teams tackle real product challenges. Learn design thinking methodology and collaborate with talented designers from the ecosystem.",
+      accessType: "tenant",
+      month: "March 2026"
+    },
   ];
 
-  const featuredEvents = [
-    {
-      title: "Tech Innovation Summit 2026",
-      date: "January 15, 2026",
-      type: "Conference",
-      tenantBenefit: "Free VIP Pass (Regular: ฿5,000)"
-    },
-    {
-      title: "Monthly Startup Mixer",
-      date: "Every First Thursday",
-      type: "Networking",
-      tenantBenefit: "Complimentary Entry + Drinks"
-    },
-    {
-      title: "Digital Marketing Workshop",
-      date: "December 20, 2025",
-      type: "Workshop",
-      tenantBenefit: "Priority Registration"
+  // Group events by month
+  const eventsByMonth = events.reduce((acc, event) => {
+    if (!acc[event.month]) {
+      acc[event.month] = [];
     }
-  ];
+    acc[event.month].push(event);
+    return acc;
+  }, {} as Record<string, Event[]>);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-muted/30 to-background">
@@ -156,120 +148,127 @@ const TenantPrivilege = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-16">
+      <section className="container mx-auto px-4 py-12">
         <div className="text-center mb-12">
           <div className="inline-flex items-center justify-center p-3 bg-secondary/10 rounded-full mb-4">
-            <Shield className="h-12 w-12 text-secondary" />
+            <Calendar className="h-12 w-12 text-secondary" />
           </div>
           <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-            Tenant Privilege Program
+            TDPK Events
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Exclusive benefits designed for TDPK office tenants. Work smarter, save more, connect better.
+            Discover upcoming events, workshops, and networking opportunities at True Digital Park
           </p>
         </div>
 
-        {/* Privilege Categories */}
-        <div className="grid gap-8 mb-16">
-          {privilegeCategories.map((category, idx) => {
-            const Icon = category.icon;
-            return (
-              <Card key={idx} className="border-primary/10 hover:shadow-xl transition-all">
-                <CardHeader>
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className={`p-2 rounded-lg ${category.color}`}>
-                      <Icon className="h-6 w-6" />
-                    </div>
-                    <CardTitle>{category.title}</CardTitle>
+        {/* Events by Month */}
+        {Object.entries(eventsByMonth).map(([month, monthEvents]) => (
+          <div key={month} className="mb-12">
+            <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+              <Calendar className="h-6 w-6 text-primary" />
+              {month}
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {monthEvents.map((event) => (
+                <Card
+                  key={event.id}
+                  className="overflow-hidden cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-[1.02] border-primary/10"
+                  onClick={() => setSelectedEvent(event)}
+                >
+                  <div className="aspect-video relative overflow-hidden">
+                    <img
+                      src={event.thumbnail}
+                      alt={event.title}
+                      className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+                    />
+                    <Badge className="absolute top-2 right-2 bg-background/80 text-foreground">
+                      {event.date.split(",")[0].split(" ")[1]}
+                    </Badge>
                   </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    {category.benefits.map((benefit, benefitIdx) => (
-                      <div key={benefitIdx} className="p-4 rounded-lg bg-muted/50 hover:bg-muted transition-colors">
-                        <div className="flex items-start justify-between gap-3 mb-2">
-                          <h4 className="font-semibold">{benefit.name}</h4>
-                          <Badge variant="secondary" className="shrink-0">{benefit.value}</Badge>
-                        </div>
-                        <p className="text-sm text-muted-foreground">{benefit.description}</p>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            );
-          })}
-        </div>
+                  <CardContent className="p-4">
+                    <h3 className="font-semibold text-base line-clamp-2 mb-2">
+                      {event.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground flex items-center gap-1 mb-3">
+                      <Clock className="h-3 w-3" />
+                      {event.time}
+                    </p>
+                    {/* Access Type Indicator */}
+                    <p className="text-sm font-semibold text-destructive">
+                      {event.accessType === "tenant" 
+                        ? "🔒 Tenant Access Only" 
+                        : "✓ Free Access Event"}
+                    </p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        ))}
 
-        {/* Featured Events */}
-        <div className="mb-16">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-3xl font-bold">Upcoming Tenant-Exclusive Events</h2>
-            <Badge variant="secondary">Event Calendar — Coming Soon</Badge>
+        {/* Legend */}
+        <div className="flex flex-wrap gap-6 justify-center mt-8 p-4 bg-muted/50 rounded-lg">
+          <div className="flex items-center gap-2">
+            <span className="text-sm font-semibold text-destructive">🔒 Tenant Access Only</span>
+            <span className="text-sm text-muted-foreground">– Exclusive for TDPK tenants</span>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {featuredEvents.map((event, idx) => (
-              <StandardCard key={idx}>
-                <CardHeader>
-                  <Badge className="w-fit mb-2">{event.type}</Badge>
-                  <CardTitle className="text-lg">{event.title}</CardTitle>
-                  <CardDescription className="flex items-center gap-2 mt-2">
-                    <Calendar className="h-4 w-4" />
-                    {event.date}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="flex-1">
-                  <div className="p-3 rounded-lg bg-primary/5 border border-primary/20">
-                    <p className="text-sm font-medium text-primary">{event.tenantBenefit}</p>
-                  </div>
-                  <Button className="w-full mt-4" variant="outline">Register Now</Button>
-                </CardContent>
-              </StandardCard>
-            ))}
-          </div>
-          <div className="mt-8 text-center">
-            <p className="text-muted-foreground mb-4">More events added monthly. Full calendar launching soon.</p>
+          <div className="flex items-center gap-2">
+            <span className="text-sm font-semibold text-destructive">✓ Free Access Event</span>
+            <span className="text-sm text-muted-foreground">– Open to all visitors</span>
           </div>
         </div>
-
-        {/* Value Proposition */}
-        <Card className="bg-muted/50 border-primary/10 mb-8">
-          <CardContent className="py-8">
-            <div className="grid md:grid-cols-3 gap-8 text-center">
-              <div>
-                <div className="text-4xl font-bold text-primary mb-2">฿50,000+</div>
-                <p className="text-muted-foreground">Average Annual Savings</p>
-              </div>
-              <div>
-                <div className="text-4xl font-bold text-primary mb-2">100+</div>
-                <p className="text-muted-foreground">Partner Brands</p>
-              </div>
-              <div>
-                <div className="text-4xl font-bold text-primary mb-2">24/7</div>
-                <p className="text-muted-foreground">Concierge Support</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* CTA */}
-        <Card className="bg-gradient-to-r from-primary/10 to-secondary/10 border-primary/20">
-          <CardContent className="py-12 text-center">
-            <h2 className="text-3xl font-bold mb-4">Become a TDPK Tenant</h2>
-            <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Unlock all these privileges and more by choosing TDPK as your office space
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" variant="premium">
-                <Link to="/auth">Inquire About Office Space</Link>
-              </Button>
-              <Button asChild size="lg" variant="outline">
-                <Link to="/partners">View Locations</Link>
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
       </section>
+
+      {/* Event Detail Dialog */}
+      <Dialog open={!!selectedEvent} onOpenChange={() => setSelectedEvent(null)}>
+        <DialogContent className="sm:max-w-lg">
+          {selectedEvent && (
+            <>
+              <div className="aspect-video relative overflow-hidden rounded-lg mb-4 -mx-2 -mt-2">
+                <img
+                  src={selectedEvent.thumbnail}
+                  alt={selectedEvent.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <DialogHeader>
+                <DialogTitle className="text-xl">{selectedEvent.title}</DialogTitle>
+                <DialogDescription asChild>
+                  <div className="space-y-3 pt-2">
+                    <div className="flex items-center gap-2 text-foreground">
+                      <Calendar className="h-4 w-4 text-primary" />
+                      <span className="font-medium">{selectedEvent.date}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-foreground">
+                      <Clock className="h-4 w-4 text-primary" />
+                      <span>{selectedEvent.time}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-foreground">
+                      <MapPin className="h-4 w-4 text-primary" />
+                      <span>{selectedEvent.location}</span>
+                    </div>
+                    <p className="text-sm font-semibold text-destructive pt-1">
+                      {selectedEvent.accessType === "tenant" 
+                        ? "🔒 Tenant Access Only" 
+                        : "✓ Free Access Event"}
+                    </p>
+                  </div>
+                </DialogDescription>
+              </DialogHeader>
+              <div className="mt-4">
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {selectedEvent.description}
+                </p>
+              </div>
+              <div className="mt-6">
+                <Button className="w-full" variant="premium" size="lg">
+                  Registration
+                </Button>
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
