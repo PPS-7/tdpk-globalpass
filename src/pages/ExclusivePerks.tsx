@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { StandardCard } from "@/components/ui/standard-card";
 import { CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Gift, Briefcase, Calendar, Lock } from "lucide-react";
+import { ArrowLeft, Gift, Briefcase, Calendar, Lock, Shield, Percent, Building, Users } from "lucide-react";
 import { useState } from "react";
 import {
   Dialog,
@@ -52,6 +52,54 @@ const ExclusivePerks = () => {
     }
   ];
 
+  // Tenant Privilege Categories
+  const tenantPrivilegeCategories = [
+    {
+      title: "Event Access & Networking",
+      icon: Users,
+      color: "bg-primary/10 text-primary",
+      benefits: [
+        { name: "Priority Event Registration", description: "Get first access to all TDPK-hosted events, conferences, and workshops", value: "Exclusive" },
+        { name: "VIP Seating", description: "Reserved seating at major events and networking sessions", value: "Complimentary" },
+        { name: "Speaker Series", description: "Access to monthly industry leader talks and panel discussions", value: "Free Entry" },
+        { name: "Networking Lounges", description: "Exclusive tenant-only networking spaces during events", value: "Members Only" },
+      ]
+    },
+    {
+      title: "Retail & F&B Discounts",
+      icon: Percent,
+      color: "bg-secondary/10 text-secondary",
+      benefits: [
+        { name: "In-Building Restaurants", description: "Special discounts at all TDPK food courts and restaurants", value: "15-20% Off" },
+        { name: "Retail Shops", description: "Year-round discounts at retail partners within TDPK", value: "10-25% Off" },
+        { name: "Partner Brands", description: "Exclusive offers from 100+ partnered brands nationwide", value: "Up to 30% Off" },
+        { name: "Loyalty Program", description: "Earn points with every purchase, redeem for rewards", value: "5x Points" },
+      ]
+    },
+    {
+      title: "Workspace & Meeting Credits",
+      icon: Briefcase,
+      color: "bg-accent/10 text-accent-foreground",
+      benefits: [
+        { name: "Meeting Room Credits", description: "Monthly credits for booking meeting rooms", value: "20 hrs/month" },
+        { name: "TDPK Coworking Access", description: "Unlimited access to TDPK coworking spaces", value: "Included" },
+        { name: "True Space Network", description: "Cross-network access to True Space locations", value: "10 days/month" },
+        { name: "Private Office Upgrades", description: "Priority booking for private offices and phone booths", value: "Anytime" },
+      ]
+    },
+    {
+      title: "Additional Perks",
+      icon: Building,
+      color: "bg-primary/10 text-primary",
+      benefits: [
+        { name: "Concierge Service", description: "Dedicated tenant support for bookings and inquiries", value: "24/7 Available" },
+        { name: "Parking Benefits", description: "Discounted monthly parking rates at TDPK facilities", value: "30% Off" },
+        { name: "Wellness Programs", description: "Gym, yoga classes, and health check-ups", value: "Subsidized" },
+        { name: "Business Services", description: "Printing, courier, and administrative support", value: "Discounted Rates" },
+      ]
+    }
+  ];
+
   const featuredOffers = [
     { partner: "Cloud Coffee", offer: "Buy 1 Get 1 Free", category: "F&B", validUntil: "Dec 31, 2025" },
     { partner: "Fitness First", offer: "Free 1-Week Trial", category: "Wellness", validUntil: "Jan 15, 2026" },
@@ -86,7 +134,7 @@ const ExclusivePerks = () => {
             Exclusive Perks & Offers
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Unlock incredible benefits designed for coworking members and partners across the TDPK ecosystem
+            Unlock incredible benefits designed for coworking members, tenants, and partners across the TDPK ecosystem
           </p>
         </div>
 
@@ -120,6 +168,53 @@ const ExclusivePerks = () => {
               </StandardCard>
             );
           })}
+        </div>
+
+        {/* Tenant Privilege Section */}
+        <div className="mb-16">
+          <div className="flex items-center gap-3 mb-8">
+            <div className="p-3 bg-secondary/10 rounded-full">
+              <Shield className="h-8 w-8 text-secondary" />
+            </div>
+            <div>
+              <h2 className="text-3xl font-bold">Tenant Privilege Program</h2>
+              <p className="text-muted-foreground">Exclusive benefits for TDPK office tenants</p>
+            </div>
+          </div>
+          
+          <div className="grid gap-8">
+            {tenantPrivilegeCategories.map((category, idx) => {
+              const Icon = category.icon;
+              return (
+                <StandardCard key={idx} className="hover:shadow-xl transition-all border-secondary/20">
+                  <CardHeader>
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className={`p-2 rounded-lg ${category.color}`}>
+                        <Icon className="h-6 w-6" />
+                      </div>
+                      <CardTitle>{category.title}</CardTitle>
+                      <Badge variant="outline" className="ml-auto text-secondary border-secondary">Tenant Only</Badge>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="flex-1">
+                    <div className="grid md:grid-cols-2 gap-4">
+                      {category.benefits.map((benefit, benefitIdx) => (
+                        <div key={benefitIdx} className="flex items-start gap-3 p-4 rounded-lg bg-muted/50 hover:bg-muted transition-colors">
+                          <div className="flex-1">
+                            <div className="flex items-start justify-between gap-3 mb-2">
+                              <h4 className="font-semibold">{benefit.name}</h4>
+                              <Badge variant="secondary" className="shrink-0">{benefit.value}</Badge>
+                            </div>
+                            <p className="text-sm text-muted-foreground">{benefit.description}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </StandardCard>
+              );
+            })}
+          </div>
         </div>
 
         {/* Featured Offers - With Premium Lock */}
