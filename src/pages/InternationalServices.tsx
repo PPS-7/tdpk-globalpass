@@ -216,34 +216,6 @@ const InternationalServices = () => {
             </CardContent>
           </StandardCard>
 
-          {/* Workspace Solutions */}
-          <StandardCard className="h-full">
-            <CardHeader>
-              <div className="flex items-center justify-between mb-2">
-                <Briefcase className="h-8 w-8 text-secondary" />
-                <Badge>Available</Badge>
-              </div>
-              <CardTitle className="text-xl">Workspace Solutions</CardTitle>
-              <CardDescription>Office & Coworking</CardDescription>
-            </CardHeader>
-            <CardContent className="flex-1">
-              <p className="text-sm text-muted-foreground mb-4">
-                Find the perfect workspace for your team, from hot desks to private offices across our network.
-              </p>
-              <div className="space-y-2 mb-4">
-                <h4 className="font-semibold text-sm">Options Available:</h4>
-                <ul className="text-sm text-muted-foreground space-y-1">
-                  <li>• Hot desk & coworking access</li>
-                  <li>• Dedicated desks</li>
-                  <li>• Private offices</li>
-                  <li>• Virtual office packages</li>
-                </ul>
-              </div>
-              <Button variant="premium" className="w-full">
-                Browse Spaces
-              </Button>
-            </CardContent>
-          </StandardCard>
         </div>
 
         {/* Business Matching & Local Partners - MERGED SECTION */}
