@@ -10,7 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { ArrowLeft, Calendar, Clock, MapPin } from "lucide-react";
+import { ArrowLeft, Calendar, Clock, MapPin, Users, Building, Globe, Lock } from "lucide-react";
 
 interface Event {
   id: string;
@@ -20,12 +20,23 @@ interface Event {
   time: string;
   location: string;
   description: string;
-  accessType: "tenant" | "free";
+  accessType: "tdpk" | "partner" | "free" | "tenant" | "public";
   month: string;
 }
 
 const TenantPrivilege = () => {
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+  const [activeFilter, setActiveFilter] = useState<string>("all");
+
+  // Filter categories for events
+  const filterCategories = [
+    { id: "all", label: "All Events", icon: Calendar },
+    { id: "tdpk", label: "TDPK Event", icon: Building },
+    { id: "partner", label: "Partner Event", icon: Users },
+    { id: "free", label: "Free Event", icon: Globe },
+    { id: "tenant", label: "Tenant Free Access", icon: Lock },
+    { id: "public", label: "Free for Public", icon: Users },
+  ];
 
   const events: Event[] = [
     // January 2026
@@ -37,7 +48,7 @@ const TenantPrivilege = () => {
       time: "09:00 - 18:00",
       location: "TDPK Main Hall, 6th Floor",
       description: "Join industry leaders and innovators for a day of insights into emerging technologies. Features keynote speeches, panel discussions, and networking opportunities with top tech executives from across Southeast Asia.",
-      accessType: "tenant",
+      accessType: "tdpk",
       month: "January"
     },
     {
@@ -48,7 +59,7 @@ const TenantPrivilege = () => {
       time: "18:00 - 21:00",
       location: "TDPK Event Space, 5th Floor",
       description: "Watch promising startups pitch their ideas to a panel of investors. Great opportunity for networking and discovering the next big thing in Thai tech ecosystem.",
-      accessType: "free",
+      accessType: "public",
       month: "January"
     },
     // February 2026
@@ -83,7 +94,7 @@ const TenantPrivilege = () => {
       time: "09:00 - 16:00",
       location: "TDPK Innovation Lab",
       description: "Hands-on workshop covering practical applications of AI and ML in business. Bring your laptop and learn to build your first AI models with guidance from experts.",
-      accessType: "tenant",
+      accessType: "partner",
       month: "March"
     },
     {
@@ -94,7 +105,7 @@ const TenantPrivilege = () => {
       time: "18:00 - 21:00",
       location: "TDPK Co-working Lounge",
       description: "Our popular monthly networking event bringing together founders, investors, and tech enthusiasts. Enjoy drinks and appetizers while expanding your professional network.",
-      accessType: "free",
+      accessType: "public",
       month: "March"
     },
     // April 2026
@@ -106,7 +117,7 @@ const TenantPrivilege = () => {
       time: "09:00 - 17:00",
       location: "TDPK Main Hall, 6th Floor",
       description: "Annual gathering of fintech leaders discussing the future of financial services in Thailand. Featuring regulatory updates, case studies, and partnership opportunities.",
-      accessType: "tenant",
+      accessType: "tdpk",
       month: "April"
     },
     // May 2026
@@ -141,7 +152,7 @@ const TenantPrivilege = () => {
       time: "09:00 - 17:00",
       location: "TDPK Main Hall",
       description: "Explore the latest in cloud infrastructure, DevOps practices, and enterprise solutions with industry-leading cloud providers.",
-      accessType: "tenant",
+      accessType: "partner",
       month: "June"
     },
     // July 2026
@@ -164,7 +175,7 @@ const TenantPrivilege = () => {
       time: "18:00 - 22:00",
       location: "TDPK Rooftop",
       description: "Celebrate the mid-year milestone with fellow ecosystem members. An elegant evening of networking, entertainment, and recognition of achievements.",
-      accessType: "free",
+      accessType: "public",
       month: "July"
     },
     // August 2026
@@ -176,7 +187,7 @@ const TenantPrivilege = () => {
       time: "09:00 - 17:00",
       location: "TDPK Main Hall",
       description: "Stay ahead of threats with insights from cybersecurity experts. Learn about the latest vulnerabilities, protection strategies, and compliance requirements.",
-      accessType: "tenant",
+      accessType: "tdpk",
       month: "August"
     },
     // September 2026
@@ -200,7 +211,7 @@ const TenantPrivilege = () => {
       time: "09:00 - 17:00",
       location: "TDPK Main Hall",
       description: "Deep dive into e-commerce trends, conversion optimization, and omnichannel strategies with leading retail technology experts.",
-      accessType: "tenant",
+      accessType: "partner",
       month: "October"
     },
     {
@@ -211,7 +222,7 @@ const TenantPrivilege = () => {
       time: "18:00 - 22:00",
       location: "TDPK Rooftop",
       description: "A spooky networking night with costume contests, tech demos, and plenty of treats. Come dressed as your favorite tech icon!",
-      accessType: "free",
+      accessType: "public",
       month: "October"
     },
     // November 2026
@@ -235,7 +246,7 @@ const TenantPrivilege = () => {
       time: "18:00 - 22:00",
       location: "TDPK Main Hall",
       description: "Celebrate the year's achievements with awards recognizing outstanding startups, innovations, and ecosystem contributors. Gala dinner included.",
-      accessType: "tenant",
+      accessType: "tdpk",
       month: "December"
     },
     {
@@ -256,11 +267,34 @@ const TenantPrivilege = () => {
     "July", "August", "September", "October", "November", "December"
   ];
 
-  // Group events by month
+  // Filter events by accessType
+  const filteredEvents = activeFilter === "all" 
+    ? events 
+    : events.filter(event => event.accessType === activeFilter);
+
+  // Group filtered events by month
   const eventsByMonth = months.reduce((acc, month) => {
-    acc[month] = events.filter(event => event.month === month);
+    acc[month] = filteredEvents.filter(event => event.month === month);
     return acc;
   }, {} as Record<string, Event[]>);
+
+  // Access type badge styling
+  const getAccessBadge = (accessType: string) => {
+    switch (accessType) {
+      case "tdpk":
+        return { label: "TDPK Event", className: "bg-primary text-primary-foreground" };
+      case "partner":
+        return { label: "Partner Event", className: "bg-secondary text-secondary-foreground" };
+      case "free":
+        return { label: "Free Event", className: "bg-green-500 text-white" };
+      case "tenant":
+        return { label: "Tenant Free Access", className: "bg-purple-500 text-white" };
+      case "public":
+        return { label: "Free for Public", className: "bg-blue-500 text-white" };
+      default:
+        return { label: "Event", className: "bg-muted text-muted-foreground" };
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-muted/30 to-background">
@@ -281,7 +315,7 @@ const TenantPrivilege = () => {
 
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-12">
-        <div className="text-center mb-12">
+        <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center p-3 bg-secondary/10 rounded-full mb-4">
             <Calendar className="h-12 w-12 text-secondary" />
           </div>
@@ -293,68 +327,86 @@ const TenantPrivilege = () => {
           </p>
         </div>
 
-        {/* Legend */}
-        <div className="flex flex-wrap gap-6 justify-center mb-10 p-4 bg-muted/50 rounded-lg">
-          <div className="flex items-center gap-2">
-            <span className="text-sm font-semibold text-destructive">🔒 Tenant Access Only</span>
-            <span className="text-sm text-muted-foreground">– Exclusive for TDPK tenants</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="text-sm font-semibold text-destructive">✓ Free Access Event</span>
-            <span className="text-sm text-muted-foreground">– Open to all visitors</span>
-          </div>
+        {/* Filter Bar */}
+        <div className="flex flex-wrap gap-2 justify-center mb-10 p-4 bg-muted/50 rounded-xl">
+          {filterCategories.map((filter) => {
+            const Icon = filter.icon;
+            return (
+              <Button
+                key={filter.id}
+                variant={activeFilter === filter.id ? "default" : "outline"}
+                size="sm"
+                onClick={() => setActiveFilter(filter.id)}
+                className="flex items-center gap-2"
+              >
+                <Icon className="h-4 w-4" />
+                {filter.label}
+              </Button>
+            );
+          })}
         </div>
 
-        {/* Events by Month - Full Year */}
-        {months.map((month) => (
-          <div key={month} className="mb-10">
-            <h2 className="text-2xl font-bold mb-6 flex items-center gap-2 border-b pb-3">
-              <Calendar className="h-6 w-6 text-primary" />
-              {month} 2026
-            </h2>
-            {eventsByMonth[month].length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {eventsByMonth[month].map((event) => (
-                  <Card
-                    key={event.id}
-                    className="overflow-hidden cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-[1.02] border-primary/10"
-                    onClick={() => setSelectedEvent(event)}
-                  >
-                    <div className="aspect-video relative overflow-hidden">
-                      <img
-                        src={event.thumbnail}
-                        alt={event.title}
-                        className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
-                      />
-                      <Badge className="absolute top-2 right-2 bg-background/80 text-foreground">
-                        {event.date.split(",")[0].split(" ")[1] || event.date.split(" ")[1]}
-                      </Badge>
-                    </div>
-                    <CardContent className="p-4">
-                      <h3 className="font-semibold text-base line-clamp-2 mb-2">
-                        {event.title}
-                      </h3>
-                      <p className="text-sm text-muted-foreground flex items-center gap-1 mb-3">
-                        <Clock className="h-3 w-3" />
-                        {event.time}
-                      </p>
-                      {/* Access Type Indicator */}
-                      <p className="text-sm font-semibold text-destructive">
-                        {event.accessType === "tenant" 
-                          ? "🔒 Tenant Access Only" 
-                          : "✓ Free Access Event"}
-                      </p>
-                    </CardContent>
-                  </Card>
-                ))}
+        {/* Events by Month */}
+        {months.map((month) => {
+          if (eventsByMonth[month].length === 0) return null;
+          return (
+            <div key={month} className="mb-10">
+              <h2 className="text-2xl font-bold mb-6 flex items-center gap-2 border-b pb-3">
+                <Calendar className="h-6 w-6 text-primary" />
+                {month} 2026
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {eventsByMonth[month].map((event) => {
+                  const badge = getAccessBadge(event.accessType);
+                  return (
+                    <Card
+                      key={event.id}
+                      className="overflow-hidden cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-[1.02] border-primary/10"
+                      onClick={() => setSelectedEvent(event)}
+                    >
+                      <div className="aspect-video relative overflow-hidden">
+                        <img
+                          src={event.thumbnail}
+                          alt={event.title}
+                          className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+                        />
+                        <Badge className={`absolute top-2 right-2 ${badge.className}`}>
+                          {badge.label}
+                        </Badge>
+                        <Badge className="absolute top-2 left-2 bg-background/80 text-foreground">
+                          {event.date.split(",")[0].split(" ")[1] || event.date.split(" ")[1]}
+                        </Badge>
+                      </div>
+                      <CardContent className="p-4">
+                        <h3 className="font-semibold text-base line-clamp-2 mb-2">
+                          {event.title}
+                        </h3>
+                        <p className="text-sm text-muted-foreground flex items-center gap-1 mb-2">
+                          <Clock className="h-3 w-3" />
+                          {event.time}
+                        </p>
+                        <Badge variant="secondary" className="text-xs">
+                          Coming Soon
+                        </Badge>
+                      </CardContent>
+                    </Card>
+                  );
+                })}
               </div>
-            ) : (
-              <div className="text-center py-8 text-muted-foreground bg-muted/30 rounded-lg">
-                <p>No events scheduled for this month yet. Check back soon!</p>
-              </div>
-            )}
+            </div>
+          );
+        })}
+
+        {/* No events message */}
+        {filteredEvents.length === 0 && (
+          <div className="text-center py-12 text-muted-foreground bg-muted/30 rounded-lg">
+            <Calendar className="h-12 w-12 mx-auto mb-4 opacity-50" />
+            <p className="text-lg">No events found for this filter.</p>
+            <Button variant="outline" className="mt-4" onClick={() => setActiveFilter("all")}>
+              View All Events
+            </Button>
           </div>
-        ))}
+        )}
       </section>
 
       {/* Event Detail Dialog */}
@@ -368,6 +420,9 @@ const TenantPrivilege = () => {
                   alt={selectedEvent.title}
                   className="w-full h-full object-cover"
                 />
+                <Badge className={`absolute top-3 right-3 ${getAccessBadge(selectedEvent.accessType).className}`}>
+                  {getAccessBadge(selectedEvent.accessType).label}
+                </Badge>
               </div>
               <DialogHeader>
                 <DialogTitle className="text-xl">{selectedEvent.title}</DialogTitle>
@@ -385,11 +440,6 @@ const TenantPrivilege = () => {
                       <MapPin className="h-4 w-4 text-primary" />
                       <span>{selectedEvent.location}</span>
                     </div>
-                    <p className="text-sm font-semibold text-destructive pt-1">
-                      {selectedEvent.accessType === "tenant" 
-                        ? "🔒 Tenant Access Only" 
-                        : "✓ Free Access Event"}
-                    </p>
                   </div>
                 </DialogDescription>
               </DialogHeader>
@@ -400,7 +450,8 @@ const TenantPrivilege = () => {
               </div>
               <div className="mt-6">
                 <Button className="w-full" variant="premium" size="lg">
-                  Registration
+                  <Lock className="h-4 w-4 mr-2" />
+                  Coming Soon
                 </Button>
               </div>
             </>
