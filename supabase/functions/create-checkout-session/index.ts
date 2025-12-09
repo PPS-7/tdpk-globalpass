@@ -12,6 +12,32 @@ Deno.serve(async (req) => {
   }
 
   try {
+    // Verify authentication
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) {
+      console.error('Missing authorization header');
+      return new Response(
+        JSON.stringify({ error: 'Unauthorized' }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // Create client with user's auth to verify identity
+    const supabaseAuth = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
+      { global: { headers: { Authorization: authHeader } } }
+    );
+
+    const { data: { user }, error: userError } = await supabaseAuth.auth.getUser();
+    if (userError || !user) {
+      console.error('Auth error:', userError?.message || 'No user found');
+      return new Response(
+        JSON.stringify({ error: 'Unauthorized' }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
     const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY') || '', {
       apiVersion: '2023-10-16',
       httpClient: Stripe.createFetchHttpClient(),
@@ -26,7 +52,16 @@ Deno.serve(async (req) => {
       );
     }
 
-    // Initialize Supabase
+    // Verify the authenticated user matches the requested memberId
+    if (user.id !== memberId) {
+      console.error('User ID mismatch:', { userId: user.id, memberId });
+      return new Response(
+        JSON.stringify({ error: 'Forbidden: Cannot create checkout for another user' }),
+        { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // Use service role for database operations
     const supabase = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
@@ -40,6 +75,7 @@ Deno.serve(async (req) => {
       .single();
 
     if (planError || !plan) {
+      console.error('Plan not found:', planError?.message);
       return new Response(
         JSON.stringify({ error: 'Plan not found' }),
         { status: 404, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -52,8 +88,6 @@ Deno.serve(async (req) => {
       .select('first_name, last_name')
       .eq('id', memberId)
       .single();
-
-    const { data: user } = await supabase.auth.admin.getUserById(memberId);
 
     let customerId: string | undefined;
 
@@ -69,7 +103,7 @@ Deno.serve(async (req) => {
     } else {
       // Create new customer
       const customer = await stripe.customers.create({
-        email: user?.user?.email || undefined,
+        email: user.email || undefined,
         name: member ? `${member.first_name} ${member.last_name}` : undefined,
         metadata: { member_id: memberId },
       });
@@ -111,6 +145,7 @@ Deno.serve(async (req) => {
     }
 
     const session = await stripe.checkout.sessions.create(sessionConfig);
+    console.log('Checkout session created for member:', memberId);
 
     return new Response(
       JSON.stringify({ url: session.url }),
@@ -119,7 +154,7 @@ Deno.serve(async (req) => {
   } catch (error: any) {
     console.error('Checkout error:', error);
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ error: 'An error occurred during checkout' }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
