@@ -3,18 +3,30 @@ import { Button } from "@/components/ui/button";
 import { StandardCard } from "@/components/ui/standard-card";
 import { CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Plane, Building2, HandshakeIcon, Globe, FileText, Users, Landmark } from "lucide-react";
+import { ArrowLeft, Plane, Building2, HandshakeIcon, Globe, FileText, Users, Landmark, Briefcase, Building, Factory, GraduationCap } from "lucide-react";
 
 /*  
 NOTE FOR FUTURE:  
-This page combines three major product pillars:
+This page combines:
 1. Ecosystem Tour (1-day)
 2. Immersive Program (2-3 days)
 3. International Services (Visa, Landing, Market Entry)
+4. Business Matching & Local Partners (MERGED)
 
 Data is currently static mock data.
-Future implementation will connect to real database tables.
 */
+
+// Local partner logos for the scrolling preview
+const localPartnerLogos = [
+  { name: "Tech Corp", initial: "TC" },
+  { name: "Bangkok Legal", initial: "BL" },
+  { name: "Asia Consulting", initial: "AC" },
+  { name: "Thai Business Hub", initial: "TH" },
+  { name: "Innovation Lab", initial: "IL" },
+  { name: "Digital Solutions", initial: "DS" },
+  { name: "Market Pro", initial: "MP" },
+  { name: "StartUp Thai", initial: "ST" },
+];
 
 const InternationalServices = () => {
   return (
@@ -52,7 +64,7 @@ const InternationalServices = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           
           {/* Ecosystem Tour (1-day) */}
-          <StandardCard>
+          <StandardCard className="h-full">
             <CardHeader>
               <div className="flex items-center justify-between mb-2">
                 <Building2 className="h-8 w-8 text-primary" />
@@ -81,7 +93,7 @@ const InternationalServices = () => {
           </StandardCard>
 
           {/* Immersive Program (2-3 days) */}
-          <StandardCard>
+          <StandardCard className="h-full">
             <CardHeader>
               <div className="flex items-center justify-between mb-2">
                 <Users className="h-8 w-8 text-secondary" />
@@ -110,11 +122,14 @@ const InternationalServices = () => {
           </StandardCard>
 
           {/* Visa Services */}
-          <StandardCard>
+          <StandardCard className="h-full">
             <CardHeader>
               <div className="flex items-center justify-between mb-2">
                 <FileText className="h-8 w-8 text-primary" />
-                <Badge>Available</Badge>
+                <div className="flex gap-2">
+                  <Badge variant="outline" className="text-primary border-primary/30">MOU Ecosystem Partner</Badge>
+                  <Badge>Available</Badge>
+                </div>
               </div>
               <CardTitle className="text-xl">Visa Services</CardTitle>
               <CardDescription>Immigration Support</CardDescription>
@@ -132,6 +147,7 @@ const InternationalServices = () => {
                   <li>• Documentation guidance</li>
                 </ul>
               </div>
+              <Badge className="bg-secondary text-secondary-foreground mb-3">Partner with Perks</Badge>
               <Button variant="premium" className="w-full">
                 Get Started
               </Button>
@@ -139,7 +155,7 @@ const InternationalServices = () => {
           </StandardCard>
 
           {/* Market Exploration */}
-          <StandardCard>
+          <StandardCard className="h-full">
             <CardHeader>
               <div className="flex items-center justify-between mb-2">
                 <Plane className="h-8 w-8 text-secondary" />
@@ -168,11 +184,14 @@ const InternationalServices = () => {
           </StandardCard>
 
           {/* Market Entry */}
-          <StandardCard>
+          <StandardCard className="h-full">
             <CardHeader>
               <div className="flex items-center justify-between mb-2">
                 <Building2 className="h-8 w-8 text-primary" />
-                <Badge>Available</Badge>
+                <div className="flex gap-2">
+                  <Badge variant="outline" className="text-primary border-primary/30">MOU Ecosystem Partner</Badge>
+                  <Badge>Available</Badge>
+                </div>
               </div>
               <CardTitle className="text-xl">Market Entry</CardTitle>
               <CardDescription>Ready to Expand</CardDescription>
@@ -190,70 +209,149 @@ const InternationalServices = () => {
                   <li>• Legal & compliance guidance</li>
                 </ul>
               </div>
+              <Badge className="bg-secondary text-secondary-foreground mb-3">Partner with Perks</Badge>
               <Button variant="premium" className="w-full">
                 Start Registration
               </Button>
             </CardContent>
           </StandardCard>
 
-          {/* Business Matching */}
-          <StandardCard>
+          {/* Workspace Solutions */}
+          <StandardCard className="h-full">
             <CardHeader>
               <div className="flex items-center justify-between mb-2">
-                <HandshakeIcon className="h-8 w-8 text-primary" />
+                <Briefcase className="h-8 w-8 text-secondary" />
                 <Badge>Available</Badge>
               </div>
-              <CardTitle className="text-xl">Business Matching</CardTitle>
-              <CardDescription>Strategic Partnerships</CardDescription>
+              <CardTitle className="text-xl">Workspace Solutions</CardTitle>
+              <CardDescription>Office & Coworking</CardDescription>
             </CardHeader>
             <CardContent className="flex-1">
               <p className="text-sm text-muted-foreground mb-4">
-                Connect with strategic partners to accelerate your growth in Southeast Asia.
+                Find the perfect workspace for your team, from hot desks to private offices across our network.
               </p>
               <div className="space-y-2 mb-4">
-                <h4 className="font-semibold text-sm">Services:</h4>
+                <h4 className="font-semibold text-sm">Options Available:</h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
-                  <li>• Partner matchmaking</li>
-                  <li>• Customer introductions</li>
-                  <li>• Investor connections</li>
-                  <li>• Go-to-market strategy</li>
+                  <li>• Hot desk & coworking access</li>
+                  <li>• Dedicated desks</li>
+                  <li>• Private offices</li>
+                  <li>• Virtual office packages</li>
                 </ul>
               </div>
               <Button variant="premium" className="w-full">
-                Find Partners
+                Browse Spaces
               </Button>
             </CardContent>
           </StandardCard>
+        </div>
 
-          {/* Local Partners */}
-          <StandardCard>
-            <CardHeader>
-              <div className="flex items-center justify-between mb-2">
-                <Users className="h-8 w-8 text-secondary" />
-                <Badge>Available</Badge>
-              </div>
-              <CardTitle className="text-xl">Local Partners</CardTitle>
-              <CardDescription>Find Your Match</CardDescription>
-            </CardHeader>
-            <CardContent className="flex-1">
-              <p className="text-sm text-muted-foreground mb-4">
-                Connect with trusted local partners including service providers, distributors, and ecosystem players.
-              </p>
-              <div className="space-y-2 mb-4">
-                <h4 className="font-semibold text-sm">Partner Types:</h4>
-                <ul className="text-sm text-muted-foreground space-y-1">
+        {/* Business Matching & Local Partners - MERGED SECTION */}
+        <div className="mb-12">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="p-3 bg-secondary/10 rounded-full">
+              <HandshakeIcon className="h-8 w-8 text-secondary" />
+            </div>
+            <div>
+              <h2 className="text-3xl font-bold">Business Matching & Local Partners</h2>
+              <p className="text-muted-foreground">Connect with strategic partners to accelerate your growth in Southeast Asia</p>
+            </div>
+          </div>
+
+          {/* Partner Categories Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            {/* Corporate Partners */}
+            <StandardCard className="h-full">
+              <CardHeader>
+                <Building className="h-8 w-8 text-primary mb-2" />
+                <CardTitle className="text-lg">Corporate Partners</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="text-sm text-muted-foreground space-y-2">
+                  <li>• Large enterprises</li>
+                  <li>• MNC subsidiaries</li>
+                  <li>• Corporate innovation units</li>
+                  <li>• Strategic investors</li>
+                </ul>
+                <Button variant="outline" className="w-full mt-4" asChild>
+                  <Link to="/partners">Browse Partners</Link>
+                </Button>
+              </CardContent>
+            </StandardCard>
+
+            {/* Startup Partners */}
+            <StandardCard className="h-full">
+              <CardHeader>
+                <Factory className="h-8 w-8 text-secondary mb-2" />
+                <CardTitle className="text-lg">Startup Partners</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="text-sm text-muted-foreground space-y-2">
+                  <li>• Tech startups</li>
+                  <li>• Scale-ups</li>
+                  <li>• Accelerator alumni</li>
+                  <li>• Venture-backed companies</li>
+                </ul>
+                <Button variant="outline" className="w-full mt-4" asChild>
+                  <Link to="/partners">Browse Partners</Link>
+                </Button>
+              </CardContent>
+            </StandardCard>
+
+            {/* Government & Agencies */}
+            <StandardCard className="h-full">
+              <CardHeader>
+                <Landmark className="h-8 w-8 text-primary mb-2" />
+                <CardTitle className="text-lg">Government & Agencies</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="text-sm text-muted-foreground space-y-2">
+                  <li>• BOI Thailand</li>
+                  <li>• DEPA</li>
+                  <li>• NIA</li>
+                  <li>• Trade associations</li>
+                </ul>
+                <Button variant="outline" className="w-full mt-4" asChild>
+                  <Link to="/partners">Browse Partners</Link>
+                </Button>
+              </CardContent>
+            </StandardCard>
+
+            {/* Local Business Partners */}
+            <StandardCard className="h-full">
+              <CardHeader>
+                <GraduationCap className="h-8 w-8 text-secondary mb-2" />
+                <CardTitle className="text-lg">Local Business Partners</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="text-sm text-muted-foreground space-y-2">
                   <li>• Legal & accounting firms</li>
-                  <li>• Marketing & PR agencies</li>
-                  <li>• Technology service providers</li>
+                  <li>• Marketing agencies</li>
+                  <li>• Technology providers</li>
                   <li>• Distribution partners</li>
                 </ul>
-              </div>
-              <Button variant="premium" className="w-full">
-                Browse Partners
-              </Button>
-            </CardContent>
-          </StandardCard>
+                <Button variant="outline" className="w-full mt-4" asChild>
+                  <Link to="/partners">Browse Partners</Link>
+                </Button>
+              </CardContent>
+            </StandardCard>
+          </div>
 
+          {/* Local Partner Logo Preview Strip */}
+          <div className="bg-muted/50 rounded-xl p-6">
+            <p className="text-sm text-center text-muted-foreground mb-4">Local Business Matching Partners (Preview)</p>
+            <div className="flex gap-4 justify-center flex-wrap">
+              {localPartnerLogos.map((partner, idx) => (
+                <div 
+                  key={idx} 
+                  className="w-14 h-14 rounded-lg bg-muted flex items-center justify-center text-muted-foreground font-semibold text-sm grayscale hover:grayscale-0 transition-all cursor-pointer"
+                  title={partner.name}
+                >
+                  {partner.initial}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* CTA Section */}
