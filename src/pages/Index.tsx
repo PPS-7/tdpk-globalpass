@@ -140,7 +140,7 @@ const Index = () => {
             </Card>
           </Link>
 
-          {/* 6. Tenant Privilege - For office tenants */}
+          {/* 6. Event Calendar - TDPK Events */}
           <Link to="/tenant-privilege">
             <Card className="border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30">
               <CardContent className="pt-6">
@@ -149,9 +149,9 @@ const Index = () => {
                     <Shield className="h-6 w-6 text-secondary" />
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-2">Tenant Privilege</h3>
+                    <h3 className="font-semibold mb-2">Event Calendar</h3>
                     <p className="text-sm text-muted-foreground">
-                      Premium benefits for TDPK office space tenants
+                      Explore TDPK's yearly events, workshops, and networking sessions
                     </p>
                   </div>
                 </div>
