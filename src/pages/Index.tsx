@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Sparkles, MapPin, Gift, Shield, Globe, Crown, Building2 } from "lucide-react";
+import { Sparkles, MapPin, Gift, CalendarDays, Globe, Crown, Building2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import tdpkLogo from "@/assets/tdpk-logo.png";
 import tdpkBuilding from "@/assets/tdpk-building.png";
@@ -146,7 +146,7 @@ const Index = () => {
               <CardContent className="pt-6">
                 <div className="flex items-start gap-4">
                   <div className="p-3 bg-secondary/10 rounded-lg">
-                    <Shield className="h-6 w-6 text-secondary" />
+                    <CalendarDays className="h-6 w-6 text-secondary" />
                   </div>
                   <div>
                     <h3 className="font-semibold mb-2">Event Calendar</h3>
