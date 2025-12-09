@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Sparkles, MapPin, Gift, Shield, Zap, Globe, Crown, Building2 } from "lucide-react";
+import { Sparkles, MapPin, Gift, Shield, Globe, Crown, Building2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import tdpkLogo from "@/assets/tdpk-logo.png";
 import tdpkBuilding from "@/assets/tdpk-building.png";
@@ -159,22 +159,6 @@ const Index = () => {
             </Card>
           </Link>
 
-          {/* 7. Instant Verification - Utility feature */}
-          <Link to="/verification">
-            <Card className="border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30">
-              <CardContent className="pt-6">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-primary/10 rounded-lg">
-                    <Zap className="h-6 w-6 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold mb-2">Instant Verification</h3>
-                    <p className="text-sm text-muted-foreground">Quick QR code scanning for seamless check-ins</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </Link>
 
           {/* 8. Digital Pass - Utility feature */}
           <Link to="/digital-pass">
