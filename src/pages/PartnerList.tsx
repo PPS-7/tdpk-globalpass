@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowLeft, Globe, Search, Loader2, ExternalLink, Building2, Mail } from "lucide-react";
+import { ArrowLeft, Globe, CheckCircle2, Briefcase, Rocket, GraduationCap, Landmark, TrendingUp, Search, Loader2, ExternalLink, Building2, Mail } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+
+type PartnerCategory = "Corporates" | "Startups & SMEs" | "Universities & Academies" | "Government & Associations" | "Investors";
 
 interface Partner {
   id: string;
@@ -15,34 +17,40 @@ interface Partner {
   legal_name: string;
   country_code: string;
   website: string | null;
-  category: string | null;
+  region: string;
+  category: string;
   status: string;
 }
 
-// Country code to name mapping
-const countryNames: Record<string, string> = {
-  "TH": "Thailand",
-  "SG": "Singapore",
-  "MY": "Malaysia",
-  "VN": "Vietnam",
-  "ID": "Indonesia",
-  "PH": "Philippines",
-  "JP": "Japan",
-  "KR": "South Korea",
-  "CN": "China",
-  "HK": "Hong Kong",
-  "TW": "Taiwan",
-  "US": "United States",
-  "UK": "United Kingdom",
-  "AU": "Australia",
+const categoryIcons: Record<PartnerCategory, any> = {
+  "Corporates": Briefcase,
+  "Startups & SMEs": Rocket,
+  "Universities & Academies": GraduationCap,
+  "Government & Associations": Landmark,
+  "Investors": TrendingUp
+};
+
+const categoryDescriptions: Record<PartnerCategory, string> = {
+  "Corporates": "Leading corporations driving innovation in the digital ecosystem",
+  "Startups & SMEs": "Innovative startups and growing businesses shaping the future",
+  "Universities & Academies": "Educational institutions fostering talent and research",
+  "Government & Associations": "Public sector and industry associations supporting growth",
+  "Investors": "Investment firms and venture capital supporting innovation"
 };
 
 const PartnerList = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [partners, setPartners] = useState<Partner[]>([]);
   const [loading, setLoading] = useState(true);
-  const [countries, setCountries] = useState<string[]>([]);
   const { toast } = useToast();
+  
+  const categories: PartnerCategory[] = [
+    "Corporates",
+    "Startups & SMEs",
+    "Universities & Academies",
+    "Government & Associations",
+    "Investors"
+  ];
 
   useEffect(() => {
     fetchPartners();
@@ -52,18 +60,12 @@ const PartnerList = () => {
     try {
       const { data, error } = await supabase
         .from('partners')
-        .select('id, display_name, legal_name, country_code, website, category, status')
+        .select('id, display_name, legal_name, country_code, website, region, category, status')
         .eq('status', 'active')
         .order('display_name');
 
       if (error) throw error;
-      
-      const partnerData = data || [];
-      setPartners(partnerData);
-      
-      // Extract unique countries
-      const uniqueCountries = [...new Set(partnerData.map(p => p.country_code))].sort();
-      setCountries(uniqueCountries);
+      setPartners(data || []);
     } catch (error: any) {
       toast({
         title: "Error loading partners",
@@ -75,16 +77,14 @@ const PartnerList = () => {
     }
   };
 
-  const filterPartners = (countryCode: string) => {
+  const filterPartners = (category: PartnerCategory) => {
     return partners.filter(p => 
-      p.country_code === countryCode && 
+      p.category === category && 
       (searchQuery === "" || 
        p.display_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-       (p.category?.toLowerCase() || "").includes(searchQuery.toLowerCase()))
+       p.country_code.toLowerCase().includes(searchQuery.toLowerCase()))
     );
   };
-
-  const getCountryName = (code: string) => countryNames[code] || code;
 
   // Generate initials for logo placeholder
   const getInitials = (name: string) => {
@@ -96,12 +96,16 @@ const PartnerList = () => {
       .slice(0, 2);
   };
 
-  // Generate brief profile from category
+  // Generate brief profile based on category
   const getBriefProfile = (partner: Partner) => {
-    if (partner.category) {
-      return `${partner.category} partner in the True Digital Park ecosystem`;
-    }
-    return "Ecosystem partner at True Digital Park";
+    const categoryProfiles: Record<string, string> = {
+      "Corporates": "Corporate partner driving digital transformation",
+      "Startups & SMEs": "Innovative company building next-gen solutions",
+      "Universities & Academies": "Educational institution nurturing digital talent",
+      "Government & Associations": "Public sector partner supporting ecosystem growth",
+      "Investors": "Investment partner fueling innovation and growth"
+    };
+    return categoryProfiles[partner.category] || "Ecosystem partner at True Digital Park";
   };
 
   return (
@@ -128,10 +132,10 @@ const PartnerList = () => {
       <section className="container mx-auto px-4 py-12 text-center">
         <div className="flex items-center justify-center gap-3 mb-4">
           <Globe className="h-10 w-10 text-secondary animate-pulse" />
-          <h2 className="text-4xl md:text-5xl font-bold">Ecosystem Partner Directory</h2>
+          <h2 className="text-4xl md:text-5xl font-bold">True Digital Park Ecosystem Partner Directory</h2>
         </div>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-6">
-          Discover our trusted partners across the region
+          Discover our ecosystem partners across 5 categories
         </p>
         
         {/* Search Bar */}
@@ -140,7 +144,7 @@ const PartnerList = () => {
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
               type="text"
-              placeholder="Search partners by name or category..."
+              placeholder="Search partners by name or location..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-10"
@@ -149,95 +153,85 @@ const PartnerList = () => {
         </div>
       </section>
 
-      {/* Partners by Country */}
+      {/* Partners by Category with Tabs */}
       <section className="container mx-auto px-4 pb-16">
         {loading ? (
           <div className="flex justify-center items-center py-12">
             <Loader2 className="h-8 w-8 animate-spin text-primary" />
           </div>
-        ) : countries.length > 0 ? (
-          <Tabs defaultValue={countries[0]} className="w-full">
-            <TabsList className="flex flex-wrap gap-2 h-auto mb-8 bg-transparent justify-center">
-              {countries.map(countryCode => {
-                const count = filterPartners(countryCode).length;
-                return (
-                  <TabsTrigger 
-                    key={countryCode} 
-                    value={countryCode} 
-                    className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
-                  >
-                    <span>{getCountryName(countryCode)}</span>
-                    <Badge variant="secondary" className="ml-1">{count}</Badge>
-                  </TabsTrigger>
-                );
-              })}
-            </TabsList>
-
-            {countries.map(countryCode => {
-              const countryPartners = filterPartners(countryCode);
-              
+        ) : (
+        <Tabs defaultValue="Investors" className="w-full">
+          <TabsList className="grid w-full grid-cols-5 mb-8">
+            {categories.map(category => {
+              const Icon = categoryIcons[category];
+              const count = filterPartners(category).length;
               return (
-                <TabsContent key={countryCode} value={countryCode}>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    {countryPartners.length > 0 ? (
-                      countryPartners.map(partner => (
-                        <Card key={partner.id} className="border-primary/10 hover:shadow-xl transition-all hover:border-primary/30 overflow-hidden">
-                          <CardContent className="p-6">
-                            <div className="flex flex-col items-center text-center space-y-4">
-                              {/* Logo Placeholder */}
-                              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center border-2 border-primary/10">
-                                <span className="text-2xl font-bold text-primary">
-                                  {getInitials(partner.display_name)}
-                                </span>
-                              </div>
-                              
-                              {/* Company Name */}
-                              <div>
-                                <h3 className="text-lg font-semibold text-foreground">
-                                  {partner.display_name}
-                                </h3>
-                                {partner.category && (
-                                  <Badge variant="outline" className="mt-2 text-xs">
-                                    {partner.category}
-                                  </Badge>
-                                )}
-                              </div>
-                              
-                              {/* Brief Profile */}
-                              <p className="text-sm text-muted-foreground line-clamp-2">
-                                {getBriefProfile(partner)}
-                              </p>
-                              
-                              {/* Website Link */}
-                              {partner.website && (
-                                <a 
-                                  href={partner.website} 
-                                  target="_blank" 
-                                  rel="noopener noreferrer"
-                                  className="inline-flex items-center gap-1 text-sm text-primary hover:underline"
-                                >
-                                  <ExternalLink className="h-3 w-3" />
-                                  Visit Website
-                                </a>
-                              )}
-                            </div>
-                          </CardContent>
-                        </Card>
-                      ))
-                    ) : (
-                      <div className="col-span-full text-center py-12">
-                        <p className="text-muted-foreground">No partners found matching your search.</p>
-                      </div>
-                    )}
-                  </div>
-                </TabsContent>
+                <TabsTrigger key={category} value={category} className="flex items-center gap-2">
+                  <Icon className="h-4 w-4" />
+                  <span className="hidden md:inline">{category}</span>
+                  <Badge variant="secondary" className="ml-1">{count}</Badge>
+                </TabsTrigger>
               );
             })}
-          </Tabs>
-        ) : (
-          <div className="text-center py-12">
-            <p className="text-muted-foreground">No partners available at this time.</p>
-          </div>
+          </TabsList>
+
+          {categories.map(category => {
+            const categoryPartners = filterPartners(category);
+            
+            return (
+              <TabsContent key={category} value={category}>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                  {categoryPartners.length > 0 ? (
+                    categoryPartners.map(partner => (
+                      <Card key={partner.id} className="border-primary/10 hover:shadow-xl transition-all hover:border-primary/30 overflow-hidden">
+                        <CardContent className="p-6">
+                          <div className="flex flex-col items-center text-center space-y-4">
+                            {/* Logo Placeholder */}
+                            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center border-2 border-primary/10">
+                              <span className="text-xl font-bold text-primary">
+                                {getInitials(partner.display_name)}
+                              </span>
+                            </div>
+                            
+                            {/* Company Name */}
+                            <div>
+                              <h3 className="text-lg font-semibold text-foreground flex items-center justify-center gap-2">
+                                {partner.display_name}
+                                <CheckCircle2 className="h-4 w-4 text-secondary" />
+                              </h3>
+                            </div>
+                            
+                            {/* Brief Business Profile */}
+                            <p className="text-sm text-muted-foreground line-clamp-2">
+                              {getBriefProfile(partner)}
+                            </p>
+                            
+                            {/* Website Link Only */}
+                            {partner.website && (
+                              <a 
+                                href={partner.website} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-1.5 text-sm text-primary hover:underline"
+                              >
+                                <ExternalLink className="h-3.5 w-3.5" />
+                                Visit Website
+                              </a>
+                            )}
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))
+                  ) : (
+                    <div className="col-span-full text-center py-12">
+                      <p className="text-muted-foreground">No partners found matching your search.</p>
+                    </div>
+                  )}
+                </div>
+              </TabsContent>
+            );
+          })}
+        </Tabs>
         )}
       </section>
 
