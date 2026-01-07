@@ -1,4 +1,13 @@
+// @ts-expect-error - ESM module resolution not supported by TypeScript
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.75.1';
+
+// ประกาศ Deno types
+declare const Deno: {
+  env: {
+    get(key: string): string | undefined;
+  };
+  serve: (handler: (request: Request) => Response | Promise<Response>) => void;
+};
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -19,7 +28,7 @@ interface DemoUser {
   partner_id?: string;
 }
 
-Deno.serve(async (req) => {
+Deno.serve(async (req: Request) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -61,7 +70,7 @@ Deno.serve(async (req) => {
       .select('role')
       .eq('user_id', user.id);
 
-    if (roleError || !userRoles?.some(r => r.role === 'admin')) {
+    if (roleError || !userRoles?.some((r: { role: string }) => r.role === 'admin')) {
       return new Response(
         JSON.stringify({ error: 'Forbidden: Admin access required' }),
         { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -164,12 +173,12 @@ Deno.serve(async (req) => {
       }
     ];
 
-    const results = [];
+    const results: Array<{ email: string; status: string; user_id?: string; error?: string }> = [];
 
     for (const user of demoUsers) {
       // Check if user exists
       const { data: existingUser } = await supabaseAdmin.auth.admin.listUsers();
-      const userExists = existingUser?.users.find(u => u.email === user.email);
+      const userExists = existingUser?.users.find((u: { email?: string; id: string }) => u.email === user.email);
 
       let userId: string;
 
@@ -284,8 +293,12 @@ Deno.serve(async (req) => {
 
     // Create sample QR tokens
     const memberIds = results
-      .filter(r => r.status === 'success' && demoUsers.find(u => u.email === r.email && u.role === 'member'))
-      .map(r => r.user_id);
+      .filter((r: { email: string; status: string; user_id?: string }) => 
+        r.status === 'success' && 
+        demoUsers.find((u: DemoUser) => u.email === r.email && u.role === 'member')
+      )
+      .map((r: { user_id?: string }) => r.user_id)
+      .filter((id): id is string => id !== undefined);
 
     for (const memberId of memberIds) {
       await supabaseAdmin.from('qr_tokens').upsert({
@@ -298,9 +311,9 @@ Deno.serve(async (req) => {
     }
 
     // Create sample verifications and redemptions
-    const aliceId = results.find(r => r.email === 'alice.member@demo.com')?.user_id;
-    const nichaId = results.find(r => r.email === 'nicha.global@demo.com')?.user_id;
-    const taroId = results.find(r => r.email === 'taro.tenant@demo.com')?.user_id;
+    const aliceId = results.find((r: { email: string; user_id?: string }) => r.email === 'alice.member@demo.com')?.user_id;
+    const nichaId = results.find((r: { email: string; user_id?: string }) => r.email === 'nicha.global@demo.com')?.user_id;
+    const taroId = results.find((r: { email: string; user_id?: string }) => r.email === 'taro.tenant@demo.com')?.user_id;
 
     if (aliceId) {
       // Alice verifications
@@ -380,7 +393,8 @@ Deno.serve(async (req) => {
       JSON.stringify({ success: true, results }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-  } catch (error: any) {
+  } catch (err) {
+    const error = err as Error;
     console.error('Error:', error);
     return new Response(
       JSON.stringify({ success: false, error: error?.message || 'Unknown error' }),

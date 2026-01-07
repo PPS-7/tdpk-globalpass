@@ -1,12 +1,29 @@
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.75.1';
+// @deno-types="npm:@types/stripe@^14.21.0"
+// @ts-expect-error - ESM module resolution not supported by TypeScript
 import Stripe from 'https://esm.sh/stripe@14.21.0?target=deno';
+// @ts-expect-error - ESM module resolution not supported by TypeScript
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.75.1';
+
+// ประกาศ Deno types
+declare const Deno: {
+  env: {
+    get(key: string): string | undefined;
+  };
+  serve: (handler: (request: Request) => Response | Promise<Response>) => void;
+};
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-Deno.serve(async (req) => {
+interface CheckoutRequest {
+  planId: string;
+  memberId: string;
+  couponCode?: string;
+}
+
+Deno.serve(async (req: Request) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -43,7 +60,8 @@ Deno.serve(async (req) => {
       httpClient: Stripe.createFetchHttpClient(),
     });
 
-    const { planId, memberId, couponCode } = await req.json();
+    const body = await req.json() as CheckoutRequest;
+    const { planId, memberId, couponCode } = body;
 
     if (!planId || !memberId) {
       return new Response(
@@ -111,7 +129,7 @@ Deno.serve(async (req) => {
     }
 
     // Create Checkout Session
-    const sessionConfig: any = {
+    const sessionConfig: Stripe.Checkout.SessionCreateParams = {
       customer: customerId,
       client_reference_id: memberId,
       line_items: [
@@ -151,7 +169,8 @@ Deno.serve(async (req) => {
       JSON.stringify({ url: session.url }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-  } catch (error: any) {
+  } catch (err) {
+    const error = err as Error;
     console.error('Checkout error:', error);
     return new Response(
       JSON.stringify({ error: 'An error occurred during checkout' }),

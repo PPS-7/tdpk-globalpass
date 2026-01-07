@@ -1,5 +1,16 @@
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.75.1';
+// @deno-types="npm:@types/stripe@^14.21.0"
+// @ts-expect-error - ESM module resolution not supported by TypeScript
 import Stripe from 'https://esm.sh/stripe@14.21.0?target=deno';
+// @ts-expect-error - ESM module resolution not supported by TypeScript
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.75.1';
+
+// ประกาศ Deno types
+declare const Deno: {
+  env: {
+    get(key: string): string | undefined;
+  };
+  serve: (handler: (request: Request) => Response | Promise<Response>) => void;
+};
 
 const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY') || '', {
   apiVersion: '2023-10-16',
@@ -10,7 +21,7 @@ const cryptoProvider = Stripe.createSubtleCryptoProvider();
 
 console.log('Stripe webhook handler loaded');
 
-Deno.serve(async (request) => {
+Deno.serve(async (request: Request) => {
   const signature = request.headers.get('Stripe-Signature');
 
   if (!signature) {
@@ -35,9 +46,10 @@ Deno.serve(async (request) => {
       undefined,
       cryptoProvider
     );
-  } catch (err: any) {
-    console.error('Webhook signature verification failed:', err.message);
-    return new Response(`Webhook Error: ${err.message}`, { status: 400 });
+  } catch (err) {
+    const error = err as Error;
+    console.error('Webhook signature verification failed:', error.message);
+    return new Response(`Webhook Error: ${error.message}`, { status: 400 });
   }
 
   console.log('Event type:', event.type);
@@ -81,7 +93,7 @@ Deno.serve(async (request) => {
           provider_sub_id: subscriptionId,
           stripe_customer_id: session.customer as string,
           stripe_subscription_id: subscriptionId,
-          status: subscription.status as any,
+          status: subscription.status,
           amount: subscription.items.data[0].price.unit_amount || 0,
           currency: subscription.currency.toUpperCase(),
           current_period_start: new Date(subscription.current_period_start * 1000).toISOString(),
@@ -109,7 +121,7 @@ Deno.serve(async (request) => {
         const { error: updateError } = await supabase
           .from('subscriptions')
           .update({
-            status: subscription.status as any,
+            status: subscription.status,
             current_period_start: new Date(subscription.current_period_start * 1000).toISOString(),
             current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
             canceled_at: subscription.canceled_at
@@ -138,7 +150,7 @@ Deno.serve(async (request) => {
 
             await supabase
               .from('members')
-              .update({ status: newStatus as any })
+              .update({ status: newStatus })
               .eq('id', subData.member_id);
           }
         }
@@ -187,7 +199,8 @@ Deno.serve(async (request) => {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
     });
-  } catch (error: any) {
+  } catch (err) {
+    const error = err as Error;
     console.error('Error processing webhook:', error);
     return new Response(`Webhook processing error: ${error.message}`, { status: 500 });
   }
