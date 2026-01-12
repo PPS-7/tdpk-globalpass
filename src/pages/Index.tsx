@@ -30,17 +30,18 @@ const Index = () => {
       {/* Features Grid */}
       <section className="container mx-auto px-4 py-16">
         <h2 className="text-3xl font-bold mb-8 text-center">Explore Our Ecosystem & Services</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
           
-          {/* 1. Partner Directory - Start with ecosystem overview */}
-          <Link to="/partners">
-            <Card className="border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30">
-              <CardContent className="pt-6">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-secondary/10 rounded-lg">
+          {/* Row 1 */}
+          {/* 1. Ecosystem Partner Directory */}
+          <Link to="/partners" className="block h-full">
+            <Card className="h-full border-border/50 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30 bg-card">
+              <CardContent className="p-6 h-full flex flex-col">
+                <div className="flex items-start gap-4 flex-1">
+                  <div className="p-3 bg-secondary/10 rounded-lg shrink-0">
                     <Globe className="h-6 w-6 text-secondary" />
                   </div>
-                  <div>
+                  <div className="flex-1 min-w-0">
                     <h3 className="font-semibold mb-2">Ecosystem Partner Directory</h3>
                     <p className="text-sm text-muted-foreground">
                       Access 100+ partners across 5 categories in Asia
@@ -51,16 +52,16 @@ const Index = () => {
             </Card>
           </Link>
 
-          {/* 2. Coworking Spaces - Next, show workspace options */}
-          <Link to="/spaces">
-            <Card className="border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30">
-              <CardContent className="pt-6">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-primary/10 rounded-lg">
+          {/* 2. Coworking Space Network */}
+          <Link to="/spaces" className="block h-full">
+            <Card className="h-full border-border/50 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30 bg-card">
+              <CardContent className="p-6 h-full flex flex-col">
+                <div className="flex items-start gap-4 flex-1">
+                  <div className="p-3 bg-primary/10 rounded-lg shrink-0">
                     <MapPin className="h-6 w-6 text-primary" />
                   </div>
-                  <div>
-                    <h3 className="font-semibold mb-2">Global Coworking Spaces</h3>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-semibold mb-2">Coworking Space Network</h3>
                     <p className="text-sm text-muted-foreground">Access premium coworking spaces across Asia</p>
                   </div>
                 </div>
@@ -68,15 +69,32 @@ const Index = () => {
             </Card>
           </Link>
 
-          {/* 2.5. Office Space Solutions - Show office options */}
-          <Link to="/office-spaces">
-            <Card className="border-secondary/10 hover:shadow-xl transition-all cursor-pointer hover:border-secondary/30">
-              <CardContent className="pt-6">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-secondary/10 rounded-lg">
+          {/* 3. International Services */}
+          <Link to="/international-services" className="block h-full">
+            <Card className="h-full border-border/50 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30 bg-card">
+              <CardContent className="p-6 h-full flex flex-col">
+                <div className="flex items-start gap-4 flex-1">
+                  <div className="p-3 bg-primary/10 rounded-lg shrink-0">
+                    <Globe className="h-6 w-6 text-primary" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-semibold mb-2">International Services</h3>
+                    <p className="text-sm text-muted-foreground">Visa services, Landing Programs, and Ecosystem tours</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+
+          {/* 4. Office Space Solutions */}
+          <Link to="/office-spaces" className="block h-full">
+            <Card className="h-full border-border/50 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30 bg-card">
+              <CardContent className="p-6 h-full flex flex-col">
+                <div className="flex items-start gap-4 flex-1">
+                  <div className="p-3 bg-secondary/10 rounded-lg shrink-0">
                     <Building2 className="h-6 w-6 text-secondary" />
                   </div>
-                  <div>
+                  <div className="flex-1 min-w-0">
                     <h3 className="font-semibold mb-2">Office Space Solutions</h3>
                     <p className="text-sm text-muted-foreground">Select office spaces for your team</p>
                   </div>
@@ -85,15 +103,35 @@ const Index = () => {
             </Card>
           </Link>
 
-          {/* 3. Membership Plans - Then show membership options */}
-          <Link to="/membership">
-            <Card className="border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30">
-              <CardContent className="pt-6">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-secondary/10 rounded-lg">
+          {/* Row 2 */}
+          {/* 5. Digital Member Pass */}
+          <Link to="/digital-pass" className="block h-full">
+            <Card className="h-full border-border/50 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30 bg-card">
+              <CardContent className="p-6 h-full flex flex-col">
+                <div className="flex items-start gap-4 flex-1">
+                  <div className="p-3 bg-primary/10 rounded-lg shrink-0">
+                    <Sparkles className="h-6 w-6 text-primary" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-semibold mb-2">Digital Member Pass</h3>
+                    <p className="text-sm text-muted-foreground">
+                      Your mobile membership card with instant access
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+
+          {/* 6. Membership Plans */}
+          <Link to="/membership" className="block h-full">
+            <Card className="h-full border-border/50 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30 bg-card">
+              <CardContent className="p-6 h-full flex flex-col">
+                <div className="flex items-start gap-4 flex-1">
+                  <div className="p-3 bg-secondary/10 rounded-lg shrink-0">
                     <Crown className="h-6 w-6 text-secondary" />
                   </div>
-                  <div>
+                  <div className="flex-1 min-w-0">
                     <h3 className="font-semibold mb-2">Membership Plans</h3>
                     <p className="text-sm text-muted-foreground">
                       Choose from free to premium tiers with exclusive benefits
@@ -104,15 +142,15 @@ const Index = () => {
             </Card>
           </Link>
 
-          {/* 4. Exclusive Perks - Show benefits */}
-          <Link to="/perks">
-            <Card className="border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30">
-              <CardContent className="pt-6">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-secondary/10 rounded-lg">
+          {/* 7. Exclusive Perks & Offers */}
+          <Link to="/perks" className="block h-full">
+            <Card className="h-full border-border/50 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30 bg-card">
+              <CardContent className="p-6 h-full flex flex-col">
+                <div className="flex items-start gap-4 flex-1">
+                  <div className="p-3 bg-secondary/10 rounded-lg shrink-0">
                     <Gift className="h-6 w-6 text-secondary" />
                   </div>
-                  <div>
+                  <div className="flex-1 min-w-0">
                     <h3 className="font-semibold mb-2">Exclusive Perks & Offers</h3>
                     <p className="text-sm text-muted-foreground">
                       Unlock special discounts at 100+ partner locations
@@ -123,55 +161,18 @@ const Index = () => {
             </Card>
           </Link>
 
-          {/* 5. International Services - For expansion */}
-          <Link to="/international-services">
-            <Card className="border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30">
-              <CardContent className="pt-6">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-primary/10 rounded-lg">
-                    <Globe className="h-6 w-6 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold mb-2">International Services</h3>
-                    <p className="text-sm text-muted-foreground">Visa services, Landing Programs, and Ecosystem tours</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </Link>
-
-          {/* 6. Event Calendar - TDPK Events */}
-          <Link to="/tenant-privilege">
-            <Card className="border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30">
-              <CardContent className="pt-6">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-secondary/10 rounded-lg">
+          {/* 8. Event Calendar */}
+          <Link to="/tenant-privilege" className="block h-full">
+            <Card className="h-full border-border/50 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30 bg-card">
+              <CardContent className="p-6 h-full flex flex-col">
+                <div className="flex items-start gap-4 flex-1">
+                  <div className="p-3 bg-secondary/10 rounded-lg shrink-0">
                     <CalendarDays className="h-6 w-6 text-secondary" />
                   </div>
-                  <div>
+                  <div className="flex-1 min-w-0">
                     <h3 className="font-semibold mb-2">Event Calendar</h3>
                     <p className="text-sm text-muted-foreground">
                       Explore TDPK's yearly events, workshops, and networking sessions
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </Link>
-
-
-          {/* 8. Digital Pass - Utility feature */}
-          <Link to="/digital-pass">
-            <Card className="border-primary/10 hover:shadow-xl transition-all cursor-pointer hover:border-primary/30">
-              <CardContent className="pt-6">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-primary/10 rounded-lg">
-                    <Sparkles className="h-6 w-6 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold mb-2">Digital Member Pass</h3>
-                    <p className="text-sm text-muted-foreground">
-                      Your mobile membership card with instant access
                     </p>
                   </div>
                 </div>
