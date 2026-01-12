@@ -1,5 +1,4 @@
-// @ts-expect-error - ESM module resolution not supported by TypeScript
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.75.1';
+import { createClient } from '@supabase/supabase-js';
 
 // ประกาศ Deno types
 declare const Deno: {
