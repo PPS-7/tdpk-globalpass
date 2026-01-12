@@ -45,11 +45,11 @@ const PartnerList = () => {
   const { toast } = useToast();
   
   const categories: PartnerCategory[] = [
-    "Corporates",
     "Startups & SMEs",
-    "Universities & Academies",
+    "Corporates",
     "Government & Associations",
-    "Investors"
+    "Investors",
+    "Universities & Academies"
   ];
 
   useEffect(() => {
@@ -160,7 +160,7 @@ const PartnerList = () => {
             <Loader2 className="h-8 w-8 animate-spin text-primary" />
           </div>
         ) : (
-        <Tabs defaultValue="Investors" className="w-full">
+        <Tabs defaultValue="Startups & SMEs" className="w-full">
           <TabsList className="grid w-full grid-cols-5 mb-8">
             {categories.map(category => {
               const Icon = categoryIcons[category];
